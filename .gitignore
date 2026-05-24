@@ -1,0 +1,15 @@
+.DS_Store
+node_modules/
+*.log
+.vscode/
+.idea/
+
+# Old scraper artifacts. We pivoted to live Google Images links — see
+# README. These directories were from the abandoned scraping approach
+# and can be safely deleted (or kept around as a historical reference,
+# they just don't ship to the site).
+scripts/
+images/
+
+# Playwright caches (only if scripts/ ever comes back)
+.playwright/

@@ -1,0 +1,22 @@
+# Netlify configuration for Design DNA.
+# No build step — it's a static site. We just set sensible cache headers
+# and a SPA-style fallback so URLs with hash routing always resolve to
+# index.html.
+
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

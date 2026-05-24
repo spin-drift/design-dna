@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design DNA — a lineage tree of 20th and 21st century design movements</title>
+  <meta name="description" content="An interactive map of how design movements descend from each other — Bauhaus, Scandinavian Modern, Mid-Century Modern, Organic Modern, Japandi, and the rest. Click any movement to see what it inherits, what it rebels against, and what it became.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="mast">
+    <h1>Design <em>DNA</em></h1>
+    <span class="mast-tag">a lineage tree of interiors and the movements that shape them</span>
+  </header>
+
+  <main class="layout">
+    <section class="tree-col">
+      <div class="tree">
+        <div class="tree-toolbar">
+          <div class="tabs" id="tabs"></div>
+          <div class="legend">
+            <span><span class="legend-sw scandi"></span>Scandi</span>
+            <span><span class="legend-sw modernist"></span>Modernist</span>
+            <span><span class="legend-sw reaction"></span>Reaction</span>
+            <span><span class="legend-sw neutral"></span>Roots</span>
+          </div>
+        </div>
+        <div class="tree-canvas" id="tree-canvas"></div>
+      </div>
+      <p class="tree-caption">
+        Vertical position is lineage depth, not strict chronology — siblings in the same row sit at the same number of steps down from the root.
+      </p>
+    </section>
+
+    <aside class="detail" id="detail"></aside>
+  </main>
+
+  <footer>
+    Design DNA is a personal study tool. Clicking any term opens a Google Images search in a new tab.
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

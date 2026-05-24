@@ -1,0 +1,1076 @@
+// Design movement data. Each movement has:
+//   name, years, region, color (palette key)
+//   defining: one-sentence elevator pitch
+//   designers: array of either strings OR {name, interiors: bool, note?}
+//             — when interiors is true, the image search appends "interiors"
+//   inherits: array of movement IDs this descends from
+//   rebels: short list of what it's reacting against
+//   children: array of movement IDs that descend from this
+//   seeIn: where to encounter it in the wild (used as prose AND
+//          comma-split into searchable fragments)
+//   seeInAppendInteriors: when true, each "see it in" fragment gets
+//                        " interiors" appended to its search
+//   appendInteriorsToName: when true, "interiors" is appended to the
+//                        movement name when searched (used for movements
+//                        whose bare name returns mostly non-interior
+//                        results — e.g. Bauhaus returns posters, De Stijl
+//                        returns Mondrian paintings)
+//   examples: array of {term, note} — the curated, canonical searches.
+//             Curated terms are searched as-is; no append.
+//
+// Individual designers and see-in fragments can be objects with their
+// own `interiors` override:
+//   designers: [{ name: "...", interiors: true }]
+//   seeInOverrides: { "specific fragment": { interiors: false } }
+//
+// To add a movement: pick an ID, add it to MOVEMENTS, and update the
+// `children` and `inherits` arrays on adjacent nodes. Color values are
+// palette keys defined in style.css.
+
+export const MOVEMENTS = {
+  // ---------- pre-1900 roots ----------
+  japonisme: {
+    name: "Japonisme",
+    years: "1860s–1900s",
+    region: "Europe (esp. France, UK)",
+    color: "neutral",
+    defining: "European absorption of Japanese aesthetics after Japan reopened — flat composition, asymmetry, restraint, natural motifs. A cross-cutting influence rather than a coherent movement.",
+    designers: [
+      { name: "Christopher Dresser", interiors: true },
+      { name: "James McNeill Whistler", interiors: true },
+      { name: "Edward William Godwin", interiors: true },
+    ],
+    inherits: [],
+    rebels: ["Victorian maximalism", "Victorian clutter"],
+    children: ["arts_crafts", "art_nouveau", "wabi_sabi"],
+    seeIn: "Liberty & Co.'s early imports, ukiyo-e prints in Western collections, Whistler's Peacock Room, Godwin's Anglo-Japanese furniture",
+    seeInAppendInteriors: false,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Godwin Anglo-Japanese sideboard", note: "The proto-modern silhouette" },
+      { term: "Whistler Peacock Room interior", note: "Japonisme as total interior" },
+      { term: "Christopher Dresser teapot", note: "Industrial design's first beat" },
+      { term: "Hokusai Great Wave Kanagawa", note: "The ukiyo-e print everyone copied" },
+    ],
+  },
+  arts_crafts: {
+    name: "Arts & Crafts",
+    years: "1880s–1910s",
+    region: "UK, then US",
+    color: "neutral",
+    defining: "Handcraft, honest materials, visible joinery, nature-inspired patterns, rejection of industrial ornament.",
+    designers: [
+      { name: "William Morris", interiors: true },
+      { name: "Gustav Stickley", interiors: true },
+      { name: "Charles Voysey", interiors: true },
+    ],
+    inherits: ["japonisme"],
+    rebels: ["Victorian industrial ornamentation"],
+    children: ["bauhaus", "scandi_func", "de_stijl", "vienna_secession"],
+    seeIn: "Stickley furniture, Morris textiles, the bungalow",
+    seeInAppendInteriors: true,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "William Morris textile patterns", note: "The wallpaper that started it all" },
+      { term: "Gustav Stickley furniture", note: "American mission-style oak" },
+      { term: "Red House Bexleyheath Morris", note: "Morris's own home" },
+      { term: "Greene and Greene Gamble House", note: "American Arts & Crafts at its peak" },
+    ],
+  },
+  art_nouveau: {
+    name: "Art Nouveau",
+    years: "1890–1910",
+    region: "France, Belgium, Austria, Spain",
+    color: "neutral",
+    defining: "Whiplash curves, organic forms, ornament as structure. A sibling of Arts & Crafts that embraced new materials (iron, glass) but kept the handcraft ethos.",
+    designers: [
+      { name: "Hector Guimard", interiors: true },
+      { name: "Victor Horta", interiors: true },
+      { name: "Antoni Gaudí", interiors: true },
+      { name: "Louis Comfort Tiffany", interiors: true },
+    ],
+    inherits: ["japonisme", "arts_crafts"],
+    rebels: ["Academic historicism", "neoclassical revival"],
+    children: ["vienna_secession"],
+    seeIn: "Paris Métro entrances, Brussels townhouses, Gaudí's Barcelona, Tiffany lamps",
+    seeInAppendInteriors: false,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Guimard Paris Metro entrance", note: "Cast iron as botany" },
+      { term: "Horta Tassel House Brussels", note: "The Art Nouveau interior" },
+      { term: "Gaudi Casa Batllo Barcelona", note: "Art Nouveau at its most expressive" },
+      { term: "Tiffany Wisteria lamp", note: "Stained glass as nature study" },
+    ],
+  },
+  vienna_secession: {
+    name: "Vienna Secession",
+    years: "1897–1932",
+    region: "Austria",
+    color: "modernist",
+    defining: "The geometric, proto-modernist wing of Art Nouveau. Total works of art (Gesamtkunstwerk), grids softening curves, applied arts as fine arts. Bridges Art Nouveau directly to Bauhaus.",
+    designers: [
+      { name: "Josef Hoffmann", interiors: true },
+      { name: "Koloman Moser", interiors: true },
+      { name: "Otto Wagner", interiors: true },
+    ],
+    inherits: ["arts_crafts", "art_nouveau"],
+    rebels: ["Whiplash Art Nouveau excess", "historicist academicism"],
+    children: ["bauhaus", "de_stijl", "art_deco"],
+    seeIn: "Wiener Werkstätte objects, Stoclet Palace, Otto Wagner's Postal Savings Bank",
+    seeInAppendInteriors: false,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Hoffmann Stoclet Palace Brussels", note: "The Gesamtkunstwerk in built form" },
+      { term: "Otto Wagner Postal Savings Bank Vienna", note: "Proto-modernist civic architecture" },
+      { term: "Wiener Werkstatte tea service Hoffmann", note: "Grids in silver" },
+      { term: "Koloman Moser textile design", note: "Where Art Nouveau meets the grid" },
+    ],
+  },
+
+  // ---------- early 20th century modernist trunk ----------
+  art_deco: {
+    name: "Art Deco",
+    years: "1920s–1930s",
+    region: "France, US, global",
+    color: "reaction",
+    defining: "Glamorous machine-age modernism. Stepped silhouettes, sunburst motifs, exotic veneers, lacquer, chrome, mirrored surfaces, geometric repetition. The opulent twin of austere modernism — luxury Bauhaus.",
+    designers: [
+      { name: "Émile-Jacques Ruhlmann", interiors: true },
+      { name: "Jean-Michel Frank", interiors: true },
+      { name: "Eileen Gray", interiors: true },
+      { name: "Donald Deskey", interiors: true },
+    ],
+    inherits: ["vienna_secession"],
+    rebels: ["Art Nouveau curves", "Edwardian heaviness"],
+    children: [],
+    seeIn: "Chrysler Building lobby, Radio City Music Hall, Miami's South Beach, ocean liner interiors, Hollywood Regency",
+    seeInAppendInteriors: false,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Chrysler Building lobby interior", note: "Deco at its civic best" },
+      { term: "Radio City Music Hall interior", note: "The Deco palace" },
+      { term: "Ruhlmann macassar ebony cabinet", note: "Deco furniture at its most luxe" },
+      { term: "Jean-Michel Frank straw marquetry interior", note: "Deco's subtler, modernist wing" },
+      { term: "Eileen Gray E-1027 villa interior", note: "Deco meets modernism on the Riviera" },
+      { term: "Miami South Beach Art Deco hotel", note: "Streamline Moderne by the sea" },
+    ],
+  },
+
+  // ---------- early 20th century modernist trunk (continued) ----------
+  de_stijl: {
+    name: "De Stijl",
+    years: "1917–1931",
+    region: "Netherlands",
+    color: "modernist",
+    defining: "Pure geometry, primary colors plus black and white, asymmetric balance, total abstraction.",
+    designers: [
+      { name: "Piet Mondrian", interiors: false },
+      { name: "Gerrit Rietveld", interiors: true },
+      { name: "Theo van Doesburg", interiors: false },
+    ],
+    inherits: ["arts_crafts", "vienna_secession"],
+    rebels: ["Ornament", "representational form"],
+    children: ["bauhaus", "international"],
+    seeIn: "Rietveld's furniture, Mondrian's grids, Rietveld Schröder House",
+    seeInAppendInteriors: false,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Rietveld Red and Blue Chair", note: "Furniture as a Mondrian painting" },
+      { term: "Rietveld Schröder House", note: "Architecture as De Stijl manifesto" },
+      { term: "Mondrian Composition with Red Blue Yellow", note: "The grid that defined a movement" },
+    ],
+  },
+  bauhaus: {
+    name: "Bauhaus",
+    years: "1919–1933",
+    region: "Germany",
+    color: "modernist",
+    defining: "Form follows function. Tubular steel, primary colors, mass-production thinking, unity of art and industry.",
+    designers: [
+      { name: "Walter Gropius", interiors: true },
+      { name: "Marcel Breuer", interiors: true },
+      { name: "Mies van der Rohe", interiors: true },
+    ],
+    inherits: ["arts_crafts", "de_stijl", "vienna_secession"],
+    rebels: ["Decorative excess", "art-craft separation"],
+    children: ["international", "scandi_mod"],
+    seeIn: "Wassily Chair, Barcelona Chair, the Dessau school building",
+    seeInAppendInteriors: false,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Breuer Wassily Chair B3", note: "Tubular steel breakthrough" },
+      { term: "Bauhaus Dessau building Gropius", note: "The school as its own manifesto" },
+      { term: "Barcelona Chair Mies van der Rohe", note: "Modernist luxury" },
+      { term: "Bauhaus poster Herbert Bayer", note: "Graphic design template" },
+    ],
+  },
+  scandi_func: {
+    name: "Scandinavian functionalism",
+    years: "1930s",
+    region: "Sweden, Denmark, Finland",
+    color: "scandi",
+    defining: "Functionalism softened by warmth. Light woods, natural light, hand-feel preserved alongside industrial methods.",
+    designers: [
+      { name: "Alvar Aalto", interiors: true },
+      { name: "Bruno Mathsson", interiors: true },
+    ],
+    inherits: ["arts_crafts"],
+    rebels: ["Bauhaus austerity", "industrial coldness"],
+    children: ["scandi_mod"],
+    seeIn: "Aalto Stool 60, Paimio Chair, bent-plywood everything",
+    seeInAppendInteriors: false,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Aalto Paimio Chair", note: "Bent plywood for tuberculosis patients" },
+      { term: "Aalto Stool 60", note: "Three L-legs, still in production" },
+      { term: "Aalto Savoy Vase", note: "Organic curves in glass" },
+      { term: "Villa Mairea Aalto", note: "Functionalism gets a soul" },
+    ],
+  },
+
+  // ---------- ancient/imported aesthetic ----------
+  wabi_sabi: {
+    name: "Wabi-sabi",
+    years: "16th c. Japan; absorbed into Western design 1990s–",
+    region: "Japan; global from the 1990s",
+    color: "scandi",
+    defining: "Beauty in imperfection, impermanence, and incompleteness. A Japanese aesthetic philosophy, not a movement — but adopted as a design vocabulary in the West and now a direct input to Japandi.",
+    designers: [
+      { name: "Axel Vervoordt", interiors: true, note: "Western adopter" },
+      { name: "Leonard Koren", interiors: false, note: "popularizer" },
+    ],
+    inherits: ["japonisme"],
+    rebels: ["Perfectionism", "gloss", "mass-produced sameness"],
+    children: ["japandi", "organic_mod"],
+    seeIn: "Tea ceremony rooms, kintsugi pottery, Axel Vervoordt interiors, restrained Belgian and Japanese spaces",
+    seeInAppendInteriors: false,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "kintsugi gold repair pottery", note: "Imperfection as feature" },
+      { term: "Axel Vervoordt wabi sabi interior", note: "The Belgian-Japanese hybrid" },
+      { term: "Japanese tea room interior", note: "The original reference" },
+      { term: "raku ware tea bowl", note: "Pottery with the maker's hand visible" },
+    ],
+  },
+
+  // ---------- mid-century modernist branches ----------
+  international: {
+    name: "International Style",
+    years: "1932–1960s",
+    region: "Global, US-centered",
+    color: "modernist",
+    defining: "Glass curtain walls, steel frames, no ornament, volume over mass. The look of corporate modernism.",
+    designers: [
+      { name: "Mies van der Rohe", interiors: true },
+      { name: "Le Corbusier", interiors: true },
+      { name: "Philip Johnson", interiors: true },
+    ],
+    inherits: ["bauhaus", "de_stijl"],
+    rebels: ["Regional vernacular", "decorative tradition"],
+    children: ["mid_century", "brutalism", "minimalism"],
+    seeIn: "Seagram Building, Farnsworth House, every glass office tower",
+    seeInAppendInteriors: false,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Seagram Building Mies", note: "The ur-skyscraper" },
+      { term: "Farnsworth House Mies van der Rohe", note: "Glass-box minimalism" },
+      { term: "Villa Savoye Le Corbusier", note: "Five points of architecture" },
+      { term: "Glass House Philip Johnson", note: "The American glass pavilion" },
+    ],
+  },
+  scandi_mod: {
+    name: "Scandinavian Modern",
+    years: "1940s–1960s",
+    region: "Denmark, Sweden, Finland",
+    color: "scandi",
+    defining: "Warm functionalism. Teak and oak, organic curves, democratic design — beautiful things for everyone.",
+    designers: [
+      { name: "Hans Wegner", interiors: true },
+      { name: "Arne Jacobsen", interiors: true },
+      { name: "Finn Juhl", interiors: true },
+    ],
+    inherits: ["scandi_func", "bauhaus"],
+    rebels: ["Cold steel-and-glass modernism"],
+    children: ["danish_mod", "mid_century", "contemp_scandi"],
+    seeIn: "Wishbone Chair, Egg Chair, Series 7",
+    seeInAppendInteriors: false,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Wegner Wishbone Chair CH24", note: "The Y-back icon" },
+      { term: "Jacobsen Egg Chair", note: "Sculpture as seating" },
+      { term: "Jacobsen Series 7 chair", note: "Most-copied chair ever" },
+      { term: "Finn Juhl 45 Chair", note: "Floating wood and upholstery" },
+    ],
+  },
+  mid_century: {
+    name: "Mid-Century Modern",
+    years: "1945–1969",
+    region: "US, especially California",
+    color: "modernist",
+    defining: "Postwar optimism plus émigré Bauhaus ideas plus new materials. Molded plywood, fiberglass shells, atomic motifs, indoor-outdoor living.",
+    designers: [
+      { name: "Charles & Ray Eames", interiors: true },
+      { name: "Eero Saarinen", interiors: true },
+      { name: "George Nelson", interiors: true },
+    ],
+    inherits: ["international", "scandi_mod"],
+    rebels: ["Heavy traditional American furniture"],
+    children: ["california_mod", "organic_mod", "mcm_revival"],
+    seeIn: "Eames Lounge Chair, Tulip Table, Case Study Houses",
+    seeInAppendInteriors: false,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Eames Lounge Chair 670", note: "The leather-and-plywood classic" },
+      { term: "Saarinen Tulip Table", note: "One pedestal, no leg-tangle" },
+      { term: "Nelson Ball Clock", note: "Atomic-age wall clock" },
+      { term: "Case Study House 22 Stahl", note: "Los Angeles as MCM showroom" },
+      { term: "Noguchi coffee table IN-50", note: "Sculpture you can set drinks on" },
+    ],
+  },
+  danish_mod: {
+    name: "Danish Modern",
+    years: "1950s–1960s",
+    region: "US import of Danish design",
+    color: "scandi",
+    defining: "Same DNA as Scandinavian Modern but specifically what was marketed and sold in postwar America.",
+    designers: [
+      { name: "Hans Wegner", interiors: true },
+      { name: "Arne Jacobsen", interiors: true },
+      { name: "Børge Mogensen", interiors: true },
+    ],
+    inherits: ["scandi_mod"],
+    rebels: [],
+    children: ["contemp_scandi"],
+    seeIn: "The teak credenza in every 1960s American living room",
+    seeInAppendInteriors: true,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "teak credenza Danish modern", note: "The icon of the postwar American home" },
+      { term: "Mogensen Spanish Chair", note: "Saddle leather over oak" },
+      { term: "Wegner Papa Bear Chair", note: "Wingback reimagined" },
+    ],
+  },
+  california_mod: {
+    name: "California Modernism",
+    years: "1945–1970s",
+    region: "Los Angeles, Palm Springs",
+    color: "modernist",
+    defining: "Glass walls, flat roofs, post-and-beam, swimming pools, climate-driven openness. Includes Desert Modernism (Palm Springs).",
+    designers: [
+      { name: "Richard Neutra", interiors: true },
+      { name: "Rudolph Schindler", interiors: true },
+      { name: "Albert Frey", interiors: true },
+    ],
+    inherits: ["international", "mid_century"],
+    rebels: ["Closed-off traditional homes"],
+    children: ["minimalism"],
+    seeIn: "Stahl House, Kaufmann House, every Palm Springs A-frame",
+    seeInAppendInteriors: true,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Kaufmann House Neutra Palm Springs", note: "Desert modernism at its purest" },
+      { term: "Frey House II Palm Springs", note: "House around a boulder" },
+      { term: "Schindler House Kings Road", note: "The Los Angeles ur-house" },
+    ],
+  },
+  brutalism: {
+    name: "Brutalism",
+    years: "1950s–1970s",
+    region: "UK, then global",
+    color: "modernist",
+    defining: "Raw concrete (béton brut), monumental mass, expressed structure, civic ambition. Honesty taken to extremes.",
+    designers: [
+      { name: "Le Corbusier", interiors: true, note: "late" },
+      { name: "Paul Rudolph", interiors: true },
+      { name: "Ernő Goldfinger", interiors: true },
+    ],
+    inherits: ["international"],
+    rebels: ["Slickness of glass-box modernism"],
+    children: ["postmodern", "industrial"],
+    seeIn: "Barbican, Trellick Tower, Boston City Hall",
+    seeInAppendInteriors: false,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Barbican Estate London", note: "Concrete utopia, mostly" },
+      { term: "Trellick Tower Goldfinger", note: "Brutalist housing icon" },
+      { term: "Boston City Hall brutalism", note: "Civic concrete in America" },
+      { term: "Unité d'Habitation Le Corbusier", note: "Where it all started" },
+    ],
+  },
+
+  // ---------- reaction / postmodern branch ----------
+  postmodern: {
+    name: "Postmodernism",
+    years: "1972–1990s",
+    region: "US, Italy",
+    color: "reaction",
+    defining: "Ornament returns. Historical quotation, irony, color, references — explicit rejection of modernist purity.",
+    designers: [
+      { name: "Robert Venturi", interiors: true },
+      { name: "Michael Graves", interiors: true },
+      { name: "Philip Johnson", interiors: true, note: "late" },
+    ],
+    inherits: ["brutalism"],
+    rebels: ["Modernism", "International Style", "'less is more'"],
+    children: ["memphis", "maximalism", "mcmansion"],
+    seeIn: "Portland Building, AT&T Building, Vanna Venturi House",
+    seeInAppendInteriors: false,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Portland Building Michael Graves", note: "Color and column on a civic block" },
+      { term: "AT&T Building Philip Johnson", note: "Chippendale skyscraper" },
+      { term: "Vanna Venturi House", note: "The postmodern manifesto, built" },
+    ],
+  },
+  memphis: {
+    name: "Memphis",
+    years: "1981–1987",
+    region: "Milan",
+    color: "reaction",
+    defining: "Loud patterns, plastic laminates, geometric shapes, jarring color. Postmodernism turned up to eleven, briefly.",
+    designers: [
+      { name: "Ettore Sottsass", interiors: true },
+      { name: "Michele De Lucchi", interiors: true },
+    ],
+    inherits: ["postmodern"],
+    rebels: ["Good taste itself"],
+    children: ["maximalism"],
+    seeIn: "Carlton Bookshelf, anything that looks like a 1985 music video",
+    seeInAppendInteriors: false,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Sottsass Carlton Bookshelf", note: "The Memphis poster child" },
+      { term: "Memphis Group Milan 1981", note: "Group portrait of the movement" },
+      { term: "Sottsass Casablanca sideboard", note: "Laminate as high design" },
+    ],
+  },
+
+  // ---------- the durable american middle and its inflated cousin ----------
+  suburban_traditional: {
+    name: "Suburban Traditional",
+    years: "1950s–present (peak 1980s–2000s)",
+    region: "US, then global suburbs",
+    color: "neutral",
+    defining: "The unmarked steady-state of late-20th-century American suburban interiors. Heavy oak or cherry furniture, Tuscan or French-country kitchens, formal living rooms, floral upholstery, wall-to-wall carpet, saturated paint colors. The aesthetic almost nobody chooses on purpose but everybody recognizes — and the thing that most contemporary lifestyle styles are reacting to.",
+    designers: [],
+    inherits: [],
+    rebels: ["Mid-Century Modern austerity"],
+    children: ["mcmansion"],
+    seeIn: "Pottery Barn 1998 catalog, Tuscan kitchens, formal dining rooms, oak entertainment centers, beige berber carpet",
+    seeInAppendInteriors: true,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Tuscan kitchen 2000s interior", note: "The signature aspirational kitchen" },
+      { term: "oak entertainment center living room", note: "The bulky 90s anchor piece" },
+      { term: "formal dining room cherry furniture", note: "The room nobody used" },
+      { term: "Pottery Barn 1998 catalog interior", note: "The mass-market codifier" },
+      { term: "floral upholstery living room 1990s", note: "The chintz era in America" },
+    ],
+  },
+  mcmansion: {
+    name: "McMansion",
+    years: "1985–present",
+    region: "US suburban spec building",
+    color: "reaction",
+    defining: "Postmodern eclecticism applied to spec building, at scale. Two-story foyers, soaring great-room ceilings, palladian windows, mismatched roof gables, a Tuscan column or two glued onto a Colonial body. Not so much a style as a syndrome — but absolutely a recognizable aesthetic.",
+    designers: [
+      { name: "Toll Brothers", interiors: true, note: "as a developer aesthetic" },
+    ],
+    inherits: ["postmodern", "suburban_traditional"],
+    rebels: ["Modesty", "restraint", "coherence"],
+    children: [],
+    seeIn: "Two-story foyers, palladian windows, mismatched gables, granite-and-cherry kitchens, the McMansion Hell blog catalogues thousands",
+    seeInAppendInteriors: false,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "McMansion two story foyer interior", note: "The signature room" },
+      { term: "McMansion great room cathedral ceiling", note: "The other signature room" },
+      { term: "McMansion granite kitchen cherry cabinets", note: "The aspirational kitchen, again" },
+      { term: "McMansion exterior palladian window", note: "Outside diagnostic, since it's so distinctive" },
+      { term: "McMansion Hell blog example", note: "Kate Wagner's catalog of crimes" },
+    ],
+  },
+
+  // ---------- contemporary minimalist/warm cluster ----------
+  minimalism: {
+    name: "Minimalism",
+    years: "1960s–present",
+    region: "Global",
+    color: "modernist",
+    defining: "Reduction to essentials. Monochrome palettes, hidden storage, negative space as design element.",
+    designers: [
+      { name: "John Pawson", interiors: true },
+      { name: "Tadao Ando", interiors: true },
+      { name: "Donald Judd", interiors: true },
+    ],
+    inherits: ["international", "california_mod"],
+    rebels: ["Decorative accumulation"],
+    children: ["japandi", "contemp_scandi"],
+    seeIn: "Calvin Klein flagships, Ando concrete houses, white-box galleries",
+    seeInAppendInteriors: true,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "John Pawson interior minimalism", note: "British minimalism at its purest" },
+      { term: "Tadao Ando Church of Light", note: "Concrete and a cross-shaped opening" },
+      { term: "Donald Judd 101 Spring Street", note: "Living inside a Judd installation" },
+    ],
+  },
+  contemp_scandi: {
+    name: "Contemporary Scandi",
+    years: "1990s–present",
+    region: "Nordic, global IKEA effect",
+    color: "scandi",
+    defining: "Mass-market Scandinavian: light woods, white walls, hygge, functional restraint, accessible price points.",
+    designers: [
+      { name: "Cecilie Manz", interiors: true },
+      { name: "Jaime Hayon", interiors: true },
+      { name: "IKEA", interiors: true, note: "collective" },
+    ],
+    inherits: ["scandi_mod", "danish_mod", "minimalism"],
+    rebels: [],
+    children: ["japandi", "organic_mod", "hamptons", "modern_farmhouse"],
+    seeIn: "Most IKEA catalogs, Muuto, Hay, Fritz Hansen reissues",
+    seeInAppendInteriors: true,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Muuto Fiber Chair", note: "Updated Scandi for the 2010s" },
+      { term: "Hay About a Chair AAC", note: "Wegner DNA, IKEA price point" },
+      { term: "hygge living room interior", note: "The Instagram-ready archetype" },
+    ],
+  },
+  mcm_revival: {
+    name: "Mid-century revival",
+    years: "2000s–present",
+    region: "US, global",
+    color: "modernist",
+    defining: "The conscious reissuing of MCM as a 21st-century style — original designs back in production, plus mass-market interpretations. Bridges MCM into the contemporary scene and feeds directly into Organic Modern.",
+    designers: [
+      { name: "Herman Miller", interiors: true, note: "reissues" },
+      { name: "Knoll", interiors: true, note: "reissues" },
+      { name: "West Elm", interiors: true, note: "mass market" },
+    ],
+    inherits: ["mid_century"],
+    rebels: ["Heavy traditional and McMansion aesthetics of the 90s"],
+    children: ["organic_mod", "modern_farmhouse"],
+    seeIn: "Eames reissues, every West Elm catalog 2010+, Mad Men's set design, Dwell magazine",
+    seeInAppendInteriors: false,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Herman Miller Eames reissue catalog", note: "MCM back in production" },
+      { term: "Dwell magazine cover home", note: "The MCM revival house, photographed" },
+      { term: "West Elm mid century living room", note: "Mass-market interpretation" },
+      { term: "Mad Men Draper apartment set", note: "The MCM revival's biggest ad campaign" },
+    ],
+  },
+  organic_mod: {
+    name: "Organic Modern",
+    years: "2015–present",
+    region: "US, then global",
+    color: "scandi",
+    defining: "Modernist bones, natural materials. Live-edge wood, boucle, plaster, plants, warm minimalism.",
+    designers: [
+      { name: "Kelly Wearstler", interiors: true, note: "some work" },
+      { name: "Athena Calderone", interiors: true },
+    ],
+    inherits: ["mid_century", "contemp_scandi", "mcm_revival", "wabi_sabi"],
+    rebels: ["Cold minimalism, sterile MCM"],
+    children: ["japandi", "modern_med"],
+    seeIn: "Most Architectural Digest interiors 2018+, boucle armchairs everywhere",
+    seeInAppendInteriors: false,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "organic modern living room interior", note: "The reference look" },
+      { term: "boucle armchair plaster walls", note: "Signature texture combo" },
+      { term: "live edge dining table modern", note: "The slab as centerpiece" },
+      { term: "Athena Calderone interior", note: "One of the style's leading voices" },
+    ],
+  },
+  japandi: {
+    name: "Japandi",
+    years: "2016–present",
+    region: "Global",
+    color: "scandi",
+    defining: "Scandinavian minimalism meets Japanese wabi-sabi. Even more restrained than Scandi, more textural than minimalism.",
+    designers: [
+      { name: "Norm Architects", interiors: true },
+      { name: "Keiji Ashizawa", interiors: true },
+    ],
+    inherits: ["contemp_scandi", "minimalism", "organic_mod", "wabi_sabi"],
+    rebels: ["Layered maximalism"],
+    children: [],
+    seeIn: "Norm Architects projects, Karimoku Case Study, restrained airbnbs",
+    seeInAppendInteriors: true,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Norm Architects Japandi interior", note: "The studio that codified the look" },
+      { term: "Karimoku Case Study furniture", note: "Japanese craft, Scandi silhouette" },
+      { term: "Japandi bedroom wabi sabi", note: "Restraint with texture" },
+    ],
+  },
+
+  industrial: {
+    name: "Industrial / Loft",
+    years: "1970s–present",
+    region: "NYC SoHo origins, then global",
+    color: "modernist",
+    defining: "Exposed brick, blackened steel, Edison bulbs, concrete floors, ductwork, leather and reclaimed wood. Born when artists colonized SoHo cast-iron buildings in the 1970s; commodified as a residential style from the 1990s on.",
+    designers: [
+      { name: "Roman Williams", interiors: true, note: "Stephen Alesch and Robin Standefer" },
+      { name: "Restoration Hardware", interiors: true, note: "mass market" },
+    ],
+    inherits: ["brutalism", "international"],
+    rebels: ["Suburban Traditional", "pristine domesticity"],
+    children: [],
+    seeIn: "NYC SoHo loft conversions, Restoration Hardware showrooms, exposed-brick coffee shops, Ace Hotel lobbies",
+    seeInAppendInteriors: true,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "SoHo loft interior exposed brick", note: "The Manhattan archetype" },
+      { term: "industrial loft kitchen blackened steel", note: "The signature kitchen move" },
+      { term: "Edison bulb pendant industrial interior", note: "The single most-cloned detail" },
+      { term: "Ace Hotel lobby interior", note: "Industrial chic at hospitality scale" },
+      { term: "Restoration Hardware Modern showroom", note: "Mass-market industrial" },
+      { term: "Roman and Williams interior", note: "The boutique-hotel codifiers" },
+    ],
+  },
+
+  // ---------- contemporary maximalist and reaction currents ----------
+  maximalism: {
+    name: "Maximalism",
+    years: "2015–present",
+    region: "Global",
+    color: "reaction",
+    defining: "Pattern-on-pattern, saturated color, collected objects, deliberate excess. Reaction to a decade of grayscale minimalism.",
+    designers: [
+      { name: "Kelly Wearstler", interiors: true },
+      { name: "Luke Edward Hall", interiors: true },
+      { name: "Beata Heuman", interiors: true },
+    ],
+    inherits: ["postmodern", "memphis"],
+    rebels: ["Minimalism", "Japandi restraint"],
+    children: ["cottagecore", "dark_academia", "boho"],
+    seeIn: "Pattern-clashing rooms on Instagram, Wearstler hotel interiors",
+    seeInAppendInteriors: false,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Kelly Wearstler hotel interior", note: "Mainstream maximalism" },
+      { term: "Luke Edward Hall interior", note: "Color-drenched English maximalism" },
+      { term: "Beata Heuman interior design", note: "Whimsical pattern-on-pattern" },
+    ],
+  },
+  english_country: {
+    name: "English Country",
+    years: "1960s–present (rooted in 19th c.)",
+    region: "UK, then global anglophile",
+    color: "reaction",
+    defining: "Chintz, layered patterns, faded reds and blues, antique rugs over rugs, dogs on sofas, books on every surface. The aspirational English country house aesthetic codified by Colefax & Fowler and exported worldwide.",
+    designers: [
+      { name: "Nancy Lancaster", interiors: true },
+      { name: "John Fowler", interiors: true },
+      { name: "Sister Parish", interiors: true, note: "American interpreter" },
+      { name: "Mark Hampton", interiors: true },
+      { name: "Robert Kime", interiors: true },
+    ],
+    inherits: [],
+    rebels: ["Modernist austerity", "Bauhaus rejection of ornament"],
+    children: ["grandmillennial"],
+    seeIn: "Country Life magazine spreads, National Trust houses, Colefax & Fowler showrooms, every Mitford-novel adaptation",
+    seeInAppendInteriors: true,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "English country house drawing room", note: "The reference room type" },
+      { term: "Colefax and Fowler interior", note: "The firm that defined the look" },
+      { term: "Robert Kime sitting room", note: "Contemporary English country at its best" },
+      { term: "Nancy Lancaster yellow drawing room", note: "The most-photographed English room of the 20th c." },
+      { term: "English country bedroom chintz", note: "Pattern-on-pattern done right" },
+      { term: "layered antique rugs English interior", note: "The signature flooring move" },
+    ],
+  },
+  boho: {
+    name: "Boho / Bohemian",
+    years: "1960s–present (peak 2014–present as named style)",
+    region: "Global",
+    color: "reaction",
+    defining: "Layered textiles, plants everywhere, macrame, rattan, Moroccan rugs, low seating, warm earth tones, an air of curated wanderlust. The 1970s hippie aesthetic rebooted via Instagram in the 2010s as Modern Boho.",
+    designers: [
+      { name: "Justina Blakeney", interiors: true, note: "Jungalow" },
+      { name: "Bohemian Society", interiors: true },
+      { name: "Anthropologie", interiors: true, note: "mass market" },
+    ],
+    inherits: ["maximalism"],
+    rebels: ["All-white minimalism", "Modern Farmhouse beige-fatigue"],
+    children: [],
+    seeIn: "Justina Blakeney's Jungalow, Anthropologie home catalogs, plant-filled apartments on Instagram, vintage rattan everywhere",
+    seeInAppendInteriors: true,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Jungalow Justina Blakeney interior", note: "The modern boho codifier" },
+      { term: "modern bohemian living room plants", note: "The reference look" },
+      { term: "macrame wall hanging boho interior", note: "The single most-cloned object" },
+      { term: "Moroccan rug layered boho bedroom", note: "The signature textile move" },
+      { term: "Anthropologie home catalog interior", note: "Boho at mass market" },
+      { term: "1970s bohemian living room", note: "The original this is mining" },
+    ],
+  },
+  grandmillennial: {
+    name: "Grandmillennial",
+    years: "2018–present",
+    region: "US, internet-native, global",
+    color: "reaction",
+    defining: "Millennial-aged 'granny chic' — chinoiserie, ruffled lampshades, dust ruffles, blue-and-white porcelain, skirted tables, pleated lampshades, deliberately fussy details. The next generation falling in love with their grandmother's aesthetic.",
+    designers: [
+      { name: "Caitlin Wilson", interiors: true },
+      { name: "Cathy Kincaid", interiors: true },
+      { name: "Ashley Whittaker", interiors: true },
+    ],
+    inherits: ["cottagecore", "english_country"],
+    rebels: ["Minimalism", "Modern Farmhouse", "Scandi sparseness"],
+    children: [],
+    seeIn: "House Beautiful's 'grandmillennial' tagged interiors 2019+, blue-and-white china collections, skirted tables on Instagram",
+    seeInAppendInteriors: true,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "grandmillennial style living room", note: "The signature look" },
+      { term: "chinoiserie wallpaper bedroom", note: "The signature wall" },
+      { term: "blue and white porcelain styling shelf", note: "The signature collection" },
+      { term: "skirted table interior grandmillennial", note: "The reborn dust ruffle" },
+      { term: "Caitlin Wilson interior", note: "A leading practitioner" },
+      { term: "pleated lampshade interior", note: "The detail that says 'grandmillennial'" },
+    ],
+  },
+
+  modern_farmhouse: {
+    name: "Modern Farmhouse",
+    years: "2010s–present",
+    region: "US (then global)",
+    color: "reaction",
+    defining: "Shiplap, black metal, barn doors, white walls, reclaimed wood. Joanna Gaines and HGTV exported it everywhere. A reaction to McMansion excess that became its own cliché.",
+    designers: [
+      { name: "Joanna Gaines", interiors: true },
+      { name: "Leanne Ford", interiors: true },
+    ],
+    inherits: ["contemp_scandi", "mcm_revival"],
+    rebels: ["McMansion excess", "Suburban Traditional"],
+    children: [],
+    seeIn: "Fixer Upper episodes, anywhere with shiplap walls, every new build in Texas 2015–2022",
+    seeInAppendInteriors: true,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Joanna Gaines farmhouse kitchen", note: "The look that defined a decade" },
+      { term: "shiplap white modern farmhouse interior", note: "The signature wall" },
+      { term: "black metal barn door interior", note: "The other signature move" },
+    ],
+  },
+  modern_med: {
+    name: "Modern Mediterranean",
+    years: "2015–present",
+    region: "US, Australia, global",
+    color: "scandi",
+    defining: "Plaster walls, arches, terracotta, warm whites, organic curves, woven materials. A Mediterranean update that absorbed Organic Modern's textural vocabulary.",
+    designers: [
+      { name: "Amber Lewis", interiors: true },
+      { name: "Sarah Sherman Samuel", interiors: true },
+      { name: "Studio McGee", interiors: true, note: "partial" },
+    ],
+    inherits: ["organic_mod", "contemp_scandi"],
+    rebels: ["Cold Scandi minimalism", "hard-edged MCM", "Suburban Traditional"],
+    children: [],
+    seeIn: "Amber Interiors projects, California spec homes 2018+, Architectural Digest's plaster-arch era",
+    seeInAppendInteriors: true,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Amber Lewis interior plaster arch", note: "The leading practitioner" },
+      { term: "modern mediterranean kitchen terracotta", note: "Warm whites and warm tile" },
+      { term: "plaster arch doorway interior modern", note: "The defining architectural move" },
+      { term: "limewash walls modern interior", note: "The Instagram texture" },
+    ],
+  },
+  hamptons: {
+    name: "Hamptons",
+    years: "1990s–present (rooted in 1880s Shingle Style)",
+    region: "US East Coast, then global",
+    color: "scandi",
+    defining: "Coastal New England via Long Island money. White slipcovers, sisal rugs, weathered teak, board-and-batten walls, navy and white stripes, hydrangeas. A lighter, breezier descendant of the Shingle Style cottage tradition that became its own aspirational lifestyle aesthetic.",
+    designers: [
+      { name: "Aerin Lauder", interiors: true },
+      { name: "Steven Gambrel", interiors: true },
+      { name: "Victoria Hagan", interiors: true },
+      { name: "Mark Sikes", interiors: true },
+    ],
+    inherits: ["contemp_scandi"],
+    rebels: ["Urban density", "dark formal traditional"],
+    children: [],
+    seeIn: "Nancy Meyers movie sets, Ralph Lauren ad campaigns, Aerin home line, every Sag Harbor share house",
+    seeInAppendInteriors: true,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Hamptons style living room", note: "The white-slipcover archetype" },
+      { term: "Nancy Meyers kitchen interior", note: "The cinematic shorthand" },
+      { term: "Aerin Lauder Hamptons home", note: "The brand-defining version" },
+      { term: "Steven Gambrel Hamptons interior", note: "More sophisticated, less beachy" },
+      { term: "shingle style cottage interior", note: "The 1880s ancestor still alive" },
+      { term: "coastal grandmother aesthetic", note: "The TikTok rebrand of the same idea" },
+    ],
+  },
+
+  cottagecore: {
+    name: "Cottagecore",
+    years: "2018–present",
+    region: "Internet-native, global",
+    color: "reaction",
+    defining: "Pastoral romanticism, vintage florals, layered textiles, gathered flowers, a return to slow domesticity. An internet aesthetic that became a real interior style.",
+    designers: [
+      { name: "Beata Heuman", interiors: true, note: "high end" },
+    ],
+    inherits: ["maximalism"],
+    rebels: ["Sleek tech-era minimalism", "urban hustle culture"],
+    children: ["grandmillennial"],
+    seeIn: "Tumblr/TikTok cottagecore tags, English cottage Airbnbs, vintage Laura Ashley revival",
+    seeInAppendInteriors: true,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "cottagecore interior bedroom", note: "The defining aesthetic" },
+      { term: "Beata Heuman cottage style", note: "Cottagecore at the designer end" },
+      { term: "Laura Ashley vintage floral interior", note: "The 80s precursor being mined" },
+    ],
+  },
+  dark_academia: {
+    name: "Dark Academia",
+    years: "2019–present",
+    region: "Internet-native, global",
+    color: "reaction",
+    defining: "Wood paneling, leather, brass, library lamps, oxblood and forest green. The interior wing of a literary internet aesthetic — Oxford college rooms by way of TikTok.",
+    designers: [],
+    inherits: ["maximalism"],
+    rebels: ["Sterile white minimalism", "open-plan Scandi"],
+    children: [],
+    seeIn: "TikTok dark academia tags, college library aesthetics, moody studies and home libraries",
+    seeInAppendInteriors: true,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "dark academia interior library", note: "The signature room type" },
+      { term: "Oxford college study interior", note: "The reference" },
+      { term: "moody home library interior dark wood", note: "Residential interpretation" },
+    ],
+  },
+};
+
+// Branch layouts. Each entry is a row; each row is an array of either
+// [movementId, xPercent] or null for an empty slot. xPercent is 0-100
+// across the tree canvas, so the layout scales with viewport width.
+//
+// Y position is computed by row index (lineage depth, not strict
+// chronology — see README for why).
+export const BRANCHES = {
+  all: {
+    label: "Full tree",
+    rows: [
+      [["japonisme", 30], ["arts_crafts", 70]],
+      [["art_nouveau", 15], ["vienna_secession", 45], ["wabi_sabi", 90]],
+      [["de_stijl", 15], ["bauhaus", 35], ["art_deco", 55], ["scandi_func", 78]],
+      [["international", 30], ["scandi_mod", 65], ["english_country", 92]],
+      [["brutalism", 8], ["california_mod", 24], ["mid_century", 44], ["danish_mod", 64], ["minimalism", 84]],
+      [["industrial", 8], ["postmodern", 24], ["mcm_revival", 42], ["contemp_scandi", 62], ["suburban_traditional", 92]],
+      [["memphis", 6], ["maximalism", 20], ["organic_mod", 38], ["japandi", 54], ["modern_farmhouse", 70], ["mcmansion", 84], ["hamptons", 96]],
+      [["boho", 6], ["cottagecore", 22], ["dark_academia", 38], ["modern_med", 58], ["grandmillennial", 80]],
+    ],
+  },
+  scandi: {
+    label: "Scandi → Japandi",
+    rows: [
+      [["japonisme", 25], ["arts_crafts", 75]],
+      [["scandi_func", 50], ["wabi_sabi", 90]],
+      [["scandi_mod", 50]],
+      [["danish_mod", 25], ["contemp_scandi", 65]],
+      [["organic_mod", 18], ["japandi", 45], ["modern_med", 72], ["hamptons", 92]],
+    ],
+  },
+  modernist: {
+    label: "Bauhaus → MCM",
+    rows: [
+      [["arts_crafts", 20], ["art_nouveau", 50], ["vienna_secession", 80]],
+      [["de_stijl", 20], ["bauhaus", 50], ["art_deco", 80]],
+      [["international", 50]],
+      [["mid_century", 25], ["brutalism", 60], ["california_mod", 85]],
+      [["minimalism", 20], ["mcm_revival", 50], ["industrial", 80]],
+    ],
+  },
+  reaction: {
+    label: "Reaction lineage",
+    rows: [
+      [["arts_crafts", 20], ["international", 70]],
+      [["brutalism", 70], ["suburban_traditional", 30]],
+      [["postmodern", 50], ["english_country", 15]],
+      [["memphis", 25], ["maximalism", 60], ["mcmansion", 88]],
+      [["boho", 12], ["cottagecore", 30], ["dark_academia", 50], ["modern_farmhouse", 72], ["grandmillennial", 92]],
+    ],
+  },
+  contemporary: {
+    label: "Today's scene",
+    rows: [
+      [["scandi_mod", 10], ["mid_century", 28], ["minimalism", 45], ["wabi_sabi", 65], ["english_country", 88]],
+      [["contemp_scandi", 12], ["mcm_revival", 32], ["maximalism", 58], ["suburban_traditional", 85]],
+      [["organic_mod", 6], ["modern_med", 19], ["hamptons", 32], ["modern_farmhouse", 47], ["industrial", 60], ["boho", 73], ["cottagecore", 85], ["dark_academia", 96]],
+      [["japandi", 20], ["grandmillennial", 60]],
+    ],
+  },
+};
+
+// ---------- search set generation ----------
+//
+// Single source of truth for which terms get scraped and which are
+// available in the frontend modal. Both the scraper and the frontend
+// import this so they can't drift apart.
+//
+// Each search has:
+//   id: a stable unique key, used as the manifest key
+//   term: the actual Google search string
+//   intent: "movement" | "designer" | "see_in" | "example"
+//   target: how many images we want
+//   movementId: which movement triggered this search
+//   label: human-readable description (used for the modal title)
+
+const CURATED_EXAMPLE_TARGET = 15;
+const MOVEMENT_NAME_TARGET = 20;
+const DESIGNER_TARGET = 6;
+const SEE_IN_TARGET = 6;
+
+function splitSeeIn(seeIn) {
+  // Split on commas and semicolons, trim, drop empties.
+  return seeIn
+    .split(/[,;]/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+function maybeInteriors(base, shouldAppend) {
+  if (!shouldAppend) return base;
+  // Don't double up if it's already there.
+  if (/\binterior(s)?\b/i.test(base)) return base;
+  return `${base} interiors`;
+}
+
+function searchId(parts) {
+  return parts
+    .map((p) =>
+      String(p)
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+    )
+    .filter(Boolean)
+    .join("::");
+}
+
+export function buildSearchSet() {
+  const out = [];
+
+  for (const [movementId, m] of Object.entries(MOVEMENTS)) {
+    // 1. The movement name itself. Append "interiors" when the bare
+    //    name returns mostly non-interior results (paintings, posters,
+    //    architecture exteriors, fashion).
+    const movementTerm = maybeInteriors(m.name, !!m.appendInteriorsToName);
+    out.push({
+      id: searchId([movementId, "movement"]),
+      term: movementTerm,
+      intent: "movement",
+      target: MOVEMENT_NAME_TARGET,
+      movementId,
+      label: m.name,
+    });
+
+    // 2. Each designer.
+    for (const d of m.designers || []) {
+      const name = typeof d === "string" ? d : d.name;
+      const interiorsFlag = typeof d === "object" ? !!d.interiors : false;
+      const term = maybeInteriors(name, interiorsFlag);
+      out.push({
+        id: searchId([movementId, "designer", name]),
+        term,
+        intent: "designer",
+        target: DESIGNER_TARGET,
+        movementId,
+        label: name,
+      });
+    }
+
+    // 3. Each "see it in" fragment.
+    if (m.seeIn) {
+      for (const fragment of splitSeeIn(m.seeIn)) {
+        const term = maybeInteriors(fragment, !!m.seeInAppendInteriors);
+        out.push({
+          id: searchId([movementId, "see-in", fragment]),
+          term,
+          intent: "see_in",
+          target: SEE_IN_TARGET,
+          movementId,
+          label: fragment,
+        });
+      }
+    }
+
+    // 4. Each curated example.
+    for (const ex of m.examples || []) {
+      out.push({
+        id: searchId([movementId, "example", ex.term]),
+        term: ex.term,
+        intent: "example",
+        target: CURATED_EXAMPLE_TARGET,
+        movementId,
+        label: ex.term,
+        note: ex.note,
+      });
+    }
+  }
+
+  // De-dupe by id (movement name could collide with a designer in
+  // pathological cases). Keep first occurrence.
+  const seen = new Set();
+  return out.filter((s) => {
+    if (seen.has(s.id)) return false;
+    seen.add(s.id);
+    return true;
+  });
+}
+
+// ---------- search lookups for the frontend ----------
+//
+// The detail panel needs to find specific searches by (intent,
+// movementId, label) when rendering clickable affordances. Computing
+// the search id directly from those inputs lets the UI hand the modal
+// a stable id without rebuilding the whole search set.
+
+export function getSearchId(movementId, intent, label) {
+  // Mirrors searchId() above. For "movement" intent the label is
+  // ignored (one movement-name search per movement).
+  switch (intent) {
+    case "movement":
+      return searchId([movementId, "movement"]);
+    case "designer":
+      return searchId([movementId, "designer", label]);
+    case "see_in":
+      return searchId([movementId, "see-in", label]);
+    case "example":
+      return searchId([movementId, "example", label]);
+    default:
+      throw new Error(`Unknown search intent: ${intent}`);
+  }
+}
+
+// Quick accessors used by the detail panel.
+
+export function getMovementSearchId(movementId) {
+  return getSearchId(movementId, "movement", null);
+}
+
+export function getDesignerName(designer) {
+  return typeof designer === "string" ? designer : designer.name;
+}
+
+export function getDesignerNote(designer) {
+  return typeof designer === "object" && designer.note ? designer.note : "";
+}
+
+export function splitSeeInFragments(seeIn) {
+  return splitSeeIn(seeIn);
+}
