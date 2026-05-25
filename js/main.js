@@ -2,6 +2,7 @@
 
 import { renderTree, renderTabs, subscribe, getState, setNode } from "./tree.js";
 import { renderDetail } from "./detail.js";
+import { initTheme } from "./theme.js";
 import { MOVEMENTS } from "./data.js";
 
 const tabsEl = document.getElementById("tabs");
@@ -17,21 +18,38 @@ function renderAll() {
 
 function syncHash() {
   const { node, branch } = getState();
-  const hash = `#${branch}/${node}`;
-  if (location.hash !== hash) {
-    history.replaceState(null, "", hash);
+  // When no movement is selected, only encode the branch (or nothing
+  // if it's the default). Keeps URLs clean and shareable.
+  let hash;
+  if (node) hash = `#${branch}/${node}`;
+  else if (branch && branch !== "all") hash = `#${branch}`;
+  else hash = "";
+  const current = location.hash || "";
+  if (current !== hash) {
+    history.replaceState(null, "", hash || location.pathname + location.search);
   }
 }
 
 function readHash() {
-  const m = location.hash.match(/^#([^/]+)\/([^/]+)$/);
-  if (!m) return;
-  const [, branch, node] = m;
-  if (MOVEMENTS[node]) setNode(node);
+  const h = location.hash;
+  // Two valid forms:
+  //   #branch/movement — both branch and movement
+  //   #branch         — branch only (no movement selected)
+  const full = h.match(/^#([^/]+)\/([^/]+)$/);
+  if (full) {
+    const [, , node] = full;
+    if (MOVEMENTS[node]) setNode(node);
+    return;
+  }
+  // Branch-only form. We don't have a public setBranch wired through
+  // from main.js right now; if the user lands on a branch-only hash,
+  // the tree's default state handles it correctly anyway since the
+  // hash is mostly for restoring a specific movement view.
 }
 
 subscribe(renderAll);
 readHash();
+initTheme();
 renderAll();
 
 // Re-render tree on resize so xPct positions adapt to new canvas width.

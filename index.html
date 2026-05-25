@@ -11,12 +11,29 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
+
+  <!-- Apply the saved theme synchronously, before any paint, so a user
+       who saved "dark" doesn't see a flash of light on load. -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "light") document.documentElement.classList.add("theme-light");
+        else if (t === "dark") document.documentElement.classList.add("theme-dark");
+      } catch (e) { /* localStorage unavailable; fall back to system */ }
+    })();
+  </script>
 </head>
 <body>
 
   <header class="mast">
     <h1>Design <em>DNA</em></h1>
     <span class="mast-tag">a lineage tree of interiors and the movements that shape them</span>
+    <div class="theme-toggle" role="radiogroup" aria-label="Theme">
+      <button class="theme-opt" data-theme="system" role="radio">system</button>
+      <button class="theme-opt" data-theme="light" role="radio">light</button>
+      <button class="theme-opt" data-theme="dark" role="radio">dark</button>
+    </div>
   </header>
 
   <main class="layout">

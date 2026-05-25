@@ -9,7 +9,10 @@ import { MOVEMENTS, BRANCHES } from "./data.js";
 
 const state = {
   branch: "all",
-  node: "organic_mod",
+  // No movement is selected on load — the detail panel renders an
+  // empty state instead. setNode() sets a real id; getState()
+  // consumers check for falsy node.
+  node: null,
   listeners: new Set(),
 };
 
@@ -37,8 +40,11 @@ export function setNode(id) {
 }
 
 function rowY(rowIndex, totalRows, canvasHeight) {
-  const top = 30;
-  const bottom = canvasHeight - 60;
+  // top/bottom are the y-coordinates of the *centers* of the first and
+  // last rows. Padding here is half-row-height plus a margin, so nodes
+  // don't clip the canvas edges.
+  const top = 50;
+  const bottom = canvasHeight - 50;
   if (totalRows <= 1) return top;
   return top + (rowIndex * (bottom - top)) / (totalRows - 1);
 }
