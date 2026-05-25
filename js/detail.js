@@ -127,7 +127,8 @@ export function renderDetail(container) {
       <div class="detail-empty">
         <h3 class="detail-empty-title">Pick a movement to learn more.</h3>
         <p class="detail-empty-body">
-          Each node in the tree opens to its defining features, its parents and descendants, the designers who shaped it, and where you encounter it today. Lines connect movements to the ones they descend from.
+          This is a family tree. Lines connect ancestors and descendants.
+          <br/><br/>No taxonomy of design can ever be complete or without bias.
         </p>
       </div>
     `;
@@ -178,7 +179,7 @@ export function renderDetail(container) {
     </div>
 
     <div class="examples">
-      <h4>Canonical examples</h4>
+      <div class="lbl">Canonical examples</div>
       ${examplesHTML(m.examples)}
     </div>
   `;
