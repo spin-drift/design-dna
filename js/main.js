@@ -3,6 +3,7 @@
 import { renderTree, renderTabs, subscribe, getState, setNode } from "./tree.js";
 import { renderDetail } from "./detail.js";
 import { initTheme } from "./theme.js";
+import { loadManifest } from "./manifest.js";
 import { MOVEMENTS } from "./data.js";
 
 const tabsEl = document.getElementById("tabs");
@@ -51,6 +52,10 @@ subscribe(renderAll);
 readHash();
 initTheme();
 renderAll();
+
+// Once the image manifest loads, re-render the detail panel so any
+// movement that's already showing picks up its image.
+loadManifest().then(() => renderDetail(detailEl));
 
 // Re-render tree on resize so xPct positions adapt to new canvas width.
 let resizeTimer;

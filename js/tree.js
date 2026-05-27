@@ -55,7 +55,10 @@ export function renderTree(container) {
 
   const rect = container.getBoundingClientRect();
   const canvasW = rect.width;
-  const canvasH = 720;
+  // Read height from the actual rendered container instead of
+  // hardcoding, so CSS changes to .tree-canvas height propagate
+  // without needing a matching JS edit.
+  const canvasH = rect.height;
 
   // Compute pixel positions for every node in this branch
   const positions = {};

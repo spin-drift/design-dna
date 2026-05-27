@@ -25,6 +25,7 @@ import {
 } from "./data.js";
 import { getState, setNode } from "./tree.js";
 import { googleImagesUrl, pinterestSearchUrl } from "./images.js";
+import { getImageSources } from "./manifest.js";
 
 // ---------- icons ----------
 
@@ -127,7 +128,7 @@ export function renderDetail(container) {
       <div class="detail-empty">
         <h3 class="detail-empty-title">Pick a movement to learn more.</h3>
         <p class="detail-empty-body">
-          This is a family tree. Lines connect ancestors and descendants.
+          Example images may reflect modern interpretations rather than period styles.
           <br/><br/>No taxonomy of design can ever be complete or without bias.
         </p>
       </div>
@@ -143,6 +144,16 @@ export function renderDetail(container) {
   const pUrl = pinterestSearchUrl(movementTerm);
   const nameAttr = escapeAttr(m.name);
 
+  // Hand-curated image(s), if any exist for this movement. Renders as
+  // a single image when there's just one, or a quiet editorial
+  // carousel when there are multiple. Each image may have its own
+  // source URL; ones with a URL render wrapped in an anchor so
+  // clicking credits the source.
+  const imageSources = getImageSources(id);
+  const imageHTML = imageSources.length === 0
+    ? ""
+    : renderImageBlock(imageSources, nameAttr);
+
   container.innerHTML = `
     <div class="detail-title-row">
       <h3 class="detail-title">${escapeHtml(m.name)}</h3>
@@ -152,6 +163,7 @@ export function renderDetail(container) {
       </div>
     </div>
     <div class="meta">${escapeHtml(m.years)} &middot; ${escapeHtml(m.region)}</div>
+    ${imageHTML}
 
     <div class="field">
       <div class="lbl">Defining</div>
@@ -192,4 +204,167 @@ export function renderDetail(container) {
       setNode(el.dataset.id);
     });
   });
+
+  // Wire the carousel, if there is one. Dot clicks switch which slide
+  // is visible; missing image files hide their slide via the onerror
+  // handler so we don't leave broken-image icons on screen.
+  wireImageBlock(container);
+}
+
+// ---------- image block rendering ----------
+//
+// Layout principle: minimal editorial chrome. The image fills the
+// panel width. When there's more than one, a quiet row of dots sits
+// below as the only carousel UI — no arrows, no counters, no thumbnail
+// filmstrip. The whole image area is the click target for the source
+// link (when one exists). Clicking a dot crossfades to that slide.
+
+function renderImageBlock(sources, nameAttr) {
+  if (sources.length === 1) {
+    const s = sources[0];
+    return renderSingleImage(s, nameAttr);
+  }
+  // Multi-image carousel.
+  const slides = sources
+    .map((s, i) => {
+      const isActive = i === 0;
+      const altIndex = i + 1;
+      const inner = `<img src="${s.file}" alt="${nameAttr} interior, image ${altIndex}" loading="lazy" onerror="this.closest('.movement-image-slide').remove()" />`;
+      const wrappedInner = s.sourceUrl
+        ? `<a href="${s.sourceUrl}" target="_blank" rel="noopener" title="Image source" class="movement-image-slide-link">${inner}</a>`
+        : inner;
+      return `<div class="movement-image-slide${isActive ? " active" : ""}" data-index="${i}">${wrappedInner}</div>`;
+    })
+    .join("");
+  const dots = sources
+    .map(
+      (_, i) =>
+        `<button class="movement-image-dot${i === 0 ? " active" : ""}" data-index="${i}" aria-label="Show image ${i + 1}"></button>`
+    )
+    .join("");
+  // Hover-only navigation zones — left third and right third of the
+  // image for prev/next, plus a middle third with a small external-link
+  // icon that opens the active slide's source URL. All three fade in
+  // on hover. The link element's href is updated in show() as the
+  // active slide changes.
+  const initialSourceUrl = sources[0].sourceUrl || "";
+  const navZones = `
+    <button class="movement-image-nav prev" data-direction="-1" aria-label="Previous image">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 6 9 12 15 18"/></svg>
+    </button>
+    <a class="movement-image-source" href="${initialSourceUrl}" target="_blank" rel="noopener" aria-label="View image source" title="View image source"${initialSourceUrl ? "" : ' style="display:none"'}>
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M19 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h6"/></svg>
+    </a>
+    <button class="movement-image-nav next" data-direction="1" aria-label="Next image">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
+    </button>`;
+  return `<div class="movement-image movement-image-carousel" data-count="${sources.length}" tabindex="0" role="region" aria-label="${nameAttr} image carousel">
+    <div class="movement-image-stack">
+      ${slides}
+      ${navZones}
+    </div>
+    <div class="movement-image-dots">${dots}</div>
+  </div>`;
+}
+
+function renderSingleImage(source, nameAttr) {
+  const img = `<img src="${source.file}" alt="${nameAttr} interior" loading="lazy" onerror="this.closest('.movement-image').style.display='none'" />`;
+  if (source.sourceUrl) {
+    return `<a class="movement-image" href="${source.sourceUrl}" target="_blank" rel="noopener" title="Image source">${img}</a>`;
+  }
+  return `<div class="movement-image movement-image-static">${img}</div>`;
+}
+
+function wireImageBlock(container) {
+  const carousel = container.querySelector(".movement-image-carousel");
+  if (!carousel) return;
+
+  const slides = Array.from(carousel.querySelectorAll(".movement-image-slide"));
+  const dots = Array.from(carousel.querySelectorAll(".movement-image-dot"));
+  const navs = Array.from(carousel.querySelectorAll(".movement-image-nav"));
+  const sourceLink = carousel.querySelector(".movement-image-source");
+  if (slides.length === 0 || dots.length === 0) return;
+
+  // Source URLs indexed by slide position. We read them off the slide
+  // anchor (if present) so the source-link icon in the middle of the
+  // carousel always points to the active slide's URL.
+  const slideUrls = slides.map((slide) => {
+    const a = slide.querySelector(".movement-image-slide-link");
+    return a ? a.getAttribute("href") : "";
+  });
+
+  // Source of truth for the active index. We don't read it from the
+  // DOM because slide elements can be removed by onerror handlers
+  // (broken images), which would skew DOM-based index math.
+  let activeIndex = 0;
+
+  function show(index) {
+    // Wrap around at both ends, so left from slide 0 lands on the
+    // last slide, and right from the last lands on slide 0.
+    const n = slides.length;
+    activeIndex = ((index % n) + n) % n;
+    slides.forEach((el, i) => el.classList.toggle("active", i === activeIndex));
+    dots.forEach((el, i) => el.classList.toggle("active", i === activeIndex));
+    // Update the source-link icon to point at the active slide's URL.
+    // Hide it if this slide has no URL.
+    if (sourceLink) {
+      const url = slideUrls[activeIndex];
+      if (url) {
+        sourceLink.setAttribute("href", url);
+        sourceLink.style.display = "";
+      } else {
+        sourceLink.removeAttribute("href");
+        sourceLink.style.display = "none";
+      }
+    }
+  }
+
+  function advance(direction) {
+    show(activeIndex + direction);
+  }
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      show(i);
+    });
+  });
+
+  navs.forEach((nav) => {
+    nav.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const direction = parseInt(nav.dataset.direction, 10);
+      advance(direction);
+    });
+  });
+
+  // Keyboard navigation. Scoped to the document because the carousel
+  // doesn't naturally hold focus while the user reads the panel; we
+  // bind once per render and tear down when the panel re-renders.
+  // (renderDetail clobbers innerHTML on each call, so listeners on
+  // removed nodes go away with them; the document-level listener is
+  // the only one we need to clean up.)
+  const onKey = (e) => {
+    // Don't hijack arrow keys if the user is in a text field. There
+    // currently aren't any, but this future-proofs.
+    const t = e.target;
+    if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      advance(-1);
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      advance(1);
+    }
+  };
+  document.addEventListener("keydown", onKey);
+  // Store the cleanup so the next renderDetail call can remove it.
+  // We attach it to the carousel itself; a MutationObserver would be
+  // overkill, and the next render replaces innerHTML wholesale, so
+  // the carousel disappears — we just need to make sure we don't leak
+  // listeners across navigations.
+  if (container._carouselCleanup) container._carouselCleanup();
+  container._carouselCleanup = () => document.removeEventListener("keydown", onKey);
 }

@@ -282,12 +282,12 @@ a:hover { text-decoration-color: var(--ink); }
   background: var(--bg-card);
   border-radius: var(--radius-lg);
   padding: 0;
-  min-height: 720px;
+  min-height: 810px;
 }
 .tree-canvas {
   position: relative;
   width: 100%;
-  height: 720px;
+  height: 810px;
 }
 .tree-svg {
   position: absolute;
@@ -327,7 +327,7 @@ a:hover { text-decoration-color: var(--ink); }
      word boundaries, and the rare extra-long single word can still
      overflow gracefully because max-width is in rem not ch. */
   width: max-content;
-  min-width: 4.5rem;
+  min-width: 3rem;
   max-width: 7.5rem;
   text-align: left;
   background: var(--bg-card);
@@ -365,6 +365,28 @@ a:hover { text-decoration-color: var(--ink); }
 .node.modernist { background: var(--modernist-fill); border-color: var(--modernist-edge); color: var(--modernist-ink); }
 .node.reaction { background: var(--reaction-fill); border-color: var(--reaction-edge); color: var(--reaction-ink); }
 .node.neutral { background: var(--neutral-fill); border-color: var(--neutral-edge); color: var(--neutral-ink); }
+
+/* --- Per-Node Overrides --- */
+/* Some nodes need a bit of extra love to fit their content. These are
+    one-offs, not a general pattern. */
+
+.node[data-id="vienna_secession"] { width: 5.5rem; }
+.node[data-id="international"] { width: 6.5rem; }
+.node[data-id="mid_century"] { width: 6.5rem; }
+.node[data-id="modern_farmhouse"] { width: 6rem; }
+.node[data-id="mexican_mod"] { width: 6rem; }
+.node[data-id="brazilian_mod"] { width: 6rem; }
+.node[data-id="california_mod"] { width: 6rem; }
+.node[data-id="contemp_scandi"] { width: 7rem; }
+.node[data-id="scandi_mod"] { width: 6.75rem; }
+.node[data-id="cocaine_mod"] { width: 4.5rem; }
+.node[data-id="tropical_mod"] { width: 5rem; }
+.node[data-id="mcm_revival"] { width: 6.25rem; }
+.node[data-id="industrial"] { width: 5rem; }
+.node[data-id="suburban_traditional"] { width: 5.5rem; }
+.node[data-id="hollywood_regency"] { width: 5.5rem; }
+
+
 
 /* ---------- right column: detail panel ---------- */
 .detail {
@@ -406,6 +428,160 @@ a:hover { text-decoration-color: var(--ink); }
   margin: 0.25rem 0 1.1rem;
   font-variant-numeric: tabular-nums;
   font-style: italic;
+}
+
+/* Hand-curated movement image. Sits between the meta and the first
+   field, full panel width.
+
+   When there's one image, it renders as an <a class="movement-image">
+   wrapping an <img> (linked to its source) or a <div> wrapper if no
+   source URL exists. When there are multiple images, it renders as a
+   .movement-image-carousel containing a stack of slides and a row of
+   dots beneath. Aspect ratios stay natural; no cropping. */
+.movement-image {
+  display: block;
+  margin: 0 0 1.25rem;
+  text-decoration: none;
+  position: relative;
+}
+.movement-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: opacity 0.15s;
+}
+/* Single-image hover dim. Scoped with :not(.movement-image-carousel)
+   so it doesn't fire when hovering the chevron zones of a multi-image
+   carousel — the carousel has its own .movement-image-slide.active:hover
+   rule that only triggers from the middle (image) third. */
+.movement-image:not(.movement-image-carousel):hover img {
+  opacity: 0.92;
+}
+
+/* Carousel mode. The slide stack uses a CSS grid trick: all slides
+   occupy the same grid cell, and only the active one is opaque. This
+   gives us a crossfade without measuring image heights in JS, and the
+   container takes the height of the tallest slide so layout doesn't
+   jump as you flip through. */
+.movement-image-carousel {
+  /* Override the default 1.25rem bottom margin to leave room for dots. */
+  margin-bottom: 0;
+  position: relative;
+}
+.movement-image-carousel:focus-visible {
+  outline: 2px solid var(--rule-strong);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+.movement-image-stack {
+  display: grid;
+  position: relative;
+}
+.movement-image-slide {
+  grid-column: 1;
+  grid-row: 1;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.movement-image-slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.movement-image-slide a,
+.movement-image-slide-link {
+  display: block;
+  text-decoration: none;
+}
+.movement-image-slide.active:hover img {
+  opacity: 0.92;
+}
+
+/* Hover-only navigation zones. Each chevron covers the left or right
+   third of the image area; the source-link icon sits centered in the
+   middle third. All three fade in on hover at 50% opacity, firm up to
+   85% when hovered directly. mix-blend-mode: difference (on the SVGs)
+   keeps them legible against any background. */
+.movement-image-nav,
+.movement-image-source {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 33.333%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--ink);
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.18s ease;
+  padding: 0;
+  /* Sit above slides so hover/click registers. */
+  z-index: 2;
+  /* Anchor reset for the source link, which is an <a>. */
+  text-decoration: none;
+}
+.movement-image-nav.prev { left: 0; }
+.movement-image-source { left: 33.333%; }
+.movement-image-nav.next { right: 0; }
+.movement-image-carousel:hover .movement-image-nav,
+.movement-image-carousel:hover .movement-image-source,
+.movement-image-nav:focus-visible,
+.movement-image-source:focus-visible {
+  opacity: 0.5;
+}
+.movement-image-carousel .movement-image-nav:hover,
+.movement-image-carousel .movement-image-source:hover {
+  opacity: 0.85;
+}
+.movement-image-nav:focus-visible,
+.movement-image-source:focus-visible {
+  outline: none;
+}
+.movement-image-nav svg,
+.movement-image-source svg {
+  /* mix-blend-mode: difference inverts the icon against whatever's
+     behind it, so it stays legible whether the image is light or dark
+     in that region. White color + difference = inverse of background.
+     Drop-shadow stays as a soft secondary halo for the mid-gray case
+     where difference produces less contrast. */
+  color: white;
+  mix-blend-mode: difference;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+/* Dots row. Sits beneath the image with quiet spacing. Each dot is a
+   small circle; the active one is filled, the others outlined. Hover
+   firms up the outline. No labels, no counter text — the dots carry
+   all the position information. */
+.movement-image-dots {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+  padding: 0.6rem 0 1.25rem;
+}
+.movement-image-dot {
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--rule-strong);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, transform 0.12s;
+}
+.movement-image-dot:hover {
+  border-color: var(--ink-soft);
+}
+.movement-image-dot.active {
+  background: var(--ink-soft);
+  border-color: var(--ink-soft);
+}
+.movement-image-dot:focus-visible {
+  outline: 2px solid var(--rule-strong);
+  outline-offset: 2px;
 }
 
 /* Fields are stacked: a small uppercase label on its own line, content

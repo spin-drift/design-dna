@@ -17,6 +17,13 @@
 //                        returns Mondrian paintings)
 //   examples: array of {term, note} — the curated, canonical searches.
 //             Curated terms are searched as-is; no append.
+//   images: optional array of source URLs for hand-curated images.
+//           Filenames are constructed: first is img/<id>.png, then
+//           img/<id>2.png, img/<id>3.png, etc. Each array entry is the
+//           original source URL the image came from (for attribution
+//           on click). One image = no carousel UI; 2+ = carousel with
+//           dots. When `images` is missing, the older img/manifest.json
+//           is consulted as a fallback for a single linked image.
 //
 // Individual designers and see-in fragments can be objects with their
 // own `interiors` override:
@@ -34,6 +41,10 @@ export const MOVEMENTS = {
     years: "1860s–1900s",
     region: "Europe (esp. France, UK)",
     color: "neutral",
+    images: [
+      "https://www.christies.com/en/lot/lot-6356905",
+      "https://www.christies.com/en/lot/lot-6356905"
+    ],
     defining: "European absorption of Japanese aesthetics after Japan reopened — flat composition, asymmetry, restraint, natural motifs. A cross-cutting influence rather than a coherent movement.",
     designers: [
       { name: "Christopher Dresser", interiors: true },
@@ -142,7 +153,7 @@ export const MOVEMENTS = {
     ],
     inherits: ["vienna_secession"],
     rebels: ["Art Nouveau curves", "Edwardian heaviness"],
-    children: [],
+    children: ["hollywood_regency"],
     seeIn: "Chrysler Building lobby, Radio City Music Hall, Miami's South Beach, ocean liner interiors, Hollywood Regency",
     seeInAppendInteriors: false,
     appendInteriorsToName: true,
@@ -461,7 +472,37 @@ export const MOVEMENTS = {
     ],
   },
 
-  // ---------- 1960s pop and 1980s luxe ----------
+  // ---------- 1930s–1960s glamour, 1960s pop, and 1980s luxe ----------
+  hollywood_regency: {
+    name: "Hollywood Regency",
+    years: "1930s–1960s, revival 2000s–2010s",
+    region: "Los Angeles and New York",
+    color: "reaction",
+    defining: "Mid-century glamour. Dorothy Draper's outsized neoclassical references, William Haines's polished Hollywood-actor commissions, chinoiserie, oversized scale, lacquered finishes, high-contrast pattern (especially black-and-white), brass and mirrors. The residential expression of Art Deco's glamour after Art Deco itself went out of fashion — kept alive in Beverly Hills until the 2000s, when Jonathan Adler made it accessible again.",
+    designers: [
+      { name: "Dorothy Draper", interiors: true },
+      { name: "William Haines", interiors: true, note: "Hollywood clients" },
+      { name: "Tony Duquette", interiors: true },
+      { name: "Jonathan Adler", interiors: true, note: "revival" },
+      { name: "Kelly Wearstler", interiors: true, note: "early career" },
+    ],
+    inherits: ["art_deco"],
+    rebels: ["Mid-century austerity", "Bauhaus moral seriousness"],
+    children: ["cocaine_mod", "grandmillennial"],
+    seeIn: "The Greenbrier hotel, Carlyle Hotel lobby, Joan Crawford's Brentwood house, every Jonathan Adler showroom, early Viceroy hotels",
+    seeInAppendInteriors: true,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "Dorothy Draper Greenbrier interior", note: "The Draper manifesto, still operating" },
+      { term: "Dorothy Draper Carlyle Hotel", note: "The hotel that codified the look" },
+      { term: "William Haines Joan Crawford house", note: "Hollywood Regency at celebrity scale" },
+      { term: "Tony Duquette interior", note: "The theatrical maximalist wing" },
+      { term: "Jonathan Adler living room interior", note: "The 2000s revival, mass market" },
+      { term: "Viceroy hotel Santa Monica Wearstler", note: "Wearstler's early Hollywood Regency revival" },
+      { term: "Hollywood Regency black white floor pattern", note: "The signature checkered move" },
+      { term: "chinoiserie wallpaper Hollywood Regency", note: "The signature wall" },
+    ],
+  },
   pop_art: {
     name: "Pop Art",
     years: "mid-1960s–early 1970s",
@@ -502,7 +543,7 @@ export const MOVEMENTS = {
       { name: "Michael Taylor", interiors: true },
       { name: "Steve Chase", interiors: true },
     ],
-    inherits: ["art_deco", "international"],
+    inherits: ["hollywood_regency", "international"],
     rebels: ["1970s earth-tone domesticity", "hippie maximalism"],
     children: [],
     seeIn: "Scarface's mansion, American Psycho's apartment, Halston's townhouse, every late-70s Architectural Digest",
@@ -755,7 +796,7 @@ export const MOVEMENTS = {
   },
 
   industrial: {
-    name: "Industrial / Loft",
+    name: "Industrial",
     years: "1970s–present",
     region: "NYC SoHo origins, then global",
     color: "modernist",
@@ -833,29 +874,53 @@ export const MOVEMENTS = {
     ],
   },
   boho: {
-    name: "Boho / Bohemian",
+    name: "Boho",
     years: "1960s–present (peak 2014–present as named style)",
     region: "Global",
     color: "reaction",
-    defining: "Layered textiles, plants everywhere, macrame, rattan, Moroccan rugs, low seating, warm earth tones, an air of curated wanderlust. The 1970s hippie aesthetic rebooted via Instagram in the 2010s as Modern Boho.",
+    defining: "Saturated, layered, designer-coded boho. Deep terracottas and emerald greens, plants spilling everywhere, Moroccan rugs layered three deep, vintage objects from travel, intentional curated chaos. The Jungalow version — a direct descendant of 1970s hippie maximalism, brought back through Instagram.",
     designers: [
       { name: "Justina Blakeney", interiors: true, note: "Jungalow" },
       { name: "Bohemian Society", interiors: true },
-      { name: "Anthropologie", interiors: true, note: "mass market" },
     ],
     inherits: ["maximalism"],
     rebels: ["All-white minimalism", "Modern Farmhouse beige-fatigue"],
-    children: [],
-    seeIn: "Justina Blakeney's Jungalow, Anthropologie home catalogs, plant-filled apartments on Instagram, vintage rattan everywhere",
+    children: ["modern_boho"],
+    seeIn: "Justina Blakeney's Jungalow, plant-filled apartments on Instagram, vintage rattan everywhere, deep-saturated bedrooms",
     seeInAppendInteriors: true,
     appendInteriorsToName: true,
     examples: [
-      { term: "Jungalow Justina Blakeney interior", note: "The modern boho codifier" },
-      { term: "modern bohemian living room plants", note: "The reference look" },
-      { term: "macrame wall hanging boho interior", note: "The single most-cloned object" },
+      { term: "Jungalow Justina Blakeney interior", note: "The Jungalow codifier" },
+      { term: "deep saturated boho living room", note: "The high-color version" },
       { term: "Moroccan rug layered boho bedroom", note: "The signature textile move" },
-      { term: "Anthropologie home catalog interior", note: "Boho at mass market" },
       { term: "1970s bohemian living room", note: "The original this is mining" },
+    ],
+  },
+  modern_boho: {
+    name: "Modern Boho",
+    years: "2017–present",
+    region: "US, then global mass market",
+    color: "reaction",
+    defining: "Boho's vocabulary executed in Modern Farmhouse's palette. Single macramé on a dowel above the bed, rattan pendant, woven baskets, faux-fur throw, one fiddle-leaf fig, all in cream and beige. What happened when Modern Farmhouse wanted texture without committing to color, and Boho went to Target.",
+    designers: [
+      { name: "Target", interiors: true, note: "Project 62, Opalhouse" },
+      { name: "World Market", interiors: true },
+      { name: "Magnolia Home", interiors: true, note: "Boho line" },
+      { name: "Anthropologie", interiors: true, note: "mass-market boho" },
+    ],
+    inherits: ["boho", "modern_farmhouse"],
+    rebels: ["Saturated maximalism", "actual hippie clutter"],
+    children: [],
+    seeIn: "Target Project 62, World Market catalogs, Magnolia Home Boho line, Wayfair 'modern boho' filter, mid-tier Anthropologie home",
+    seeInAppendInteriors: true,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "modern boho bedroom macrame neutral", note: "The bedroom archetype" },
+      { term: "neutral boho living room rattan", note: "The living-room archetype" },
+      { term: "Target Project 62 boho interior", note: "The mass-market codifier" },
+      { term: "World Market boho bedroom", note: "The other big retailer driving the look" },
+      { term: "Anthropologie home catalog boho", note: "Boho-by-Anthropologie at scale" },
+      { term: "cream beige boho dining room", note: "The full beige-boho execution" },
     ],
   },
   grandmillennial: {
@@ -869,7 +934,7 @@ export const MOVEMENTS = {
       { name: "Cathy Kincaid", interiors: true },
       { name: "Ashley Whittaker", interiors: true },
     ],
-    inherits: ["cottagecore", "english_country"],
+    inherits: ["cottagecore", "english_country", "hollywood_regency"],
     rebels: ["Minimalism", "Modern Farmhouse", "Scandi sparseness"],
     children: [],
     seeIn: "House Beautiful's 'grandmillennial' tagged interiors 2019+, blue-and-white china collections, skirted tables on Instagram",
@@ -897,7 +962,7 @@ export const MOVEMENTS = {
     ],
     inherits: ["contemp_scandi", "mcm_revival"],
     rebels: ["McMansion excess", "Suburban Traditional"],
-    children: [],
+    children: ["modern_boho"],
     seeIn: "Fixer Upper episodes, anywhere with shiplap walls, every new build in Texas 2015–2022",
     seeInAppendInteriors: true,
     appendInteriorsToName: true,
@@ -1016,9 +1081,18 @@ export const BRANCHES = {
       [["de_stijl", 12], ["bauhaus", 30], ["art_deco", 52], ["scandi_func", 78]],
       [["international", 26], ["scandi_mod", 62], ["english_country", 92]],
       [["brutalism", 6], ["california_mod", 19], ["mid_century", 36], ["mexican_mod", 50], ["brazilian_mod", 64], ["danish_mod", 78], ["minimalism", 92]],
-      [["industrial", 6], ["postmodern", 19], ["cocaine_mod", 32], ["pop_art", 44], ["mcm_revival", 56], ["tropical_mod", 68], ["contemp_scandi", 82], ["suburban_traditional", 95]],
+      // Layer 5a (1930s–1960s starts): the older half of the
+      // postwar-through-1970 layer, split off so the row doesn't pack
+      // 9 nodes into one band. Hollywood Regency sits under its parent
+      // Art Deco; Pop Art and Tropical Modern sit near their MCM-era
+      // parents; Suburban Traditional sits right where its McMansion
+      // child will land below.
+      [["pop_art", 30], ["hollywood_regency", 52], ["tropical_mod", 70], ["suburban_traditional", 92]],
+      // Layer 5b (1970s+ starts): the postmodern-and-after half. Same
+      // lineage depth, later chronology, distinct visual band.
+      [["industrial", 8], ["postmodern", 22], ["cocaine_mod", 42], ["mcm_revival", 60], ["contemp_scandi", 85]],
       [["memphis", 6], ["maximalism", 20], ["organic_mod", 38], ["japandi", 54], ["modern_farmhouse", 70], ["mcmansion", 84], ["hamptons", 96]],
-      [["boho", 6], ["cottagecore", 22], ["dark_academia", 38], ["modern_med", 58], ["grandmillennial", 80]],
+      [["boho", 6], ["cottagecore", 22], ["dark_academia", 38], ["modern_med", 52], ["modern_boho", 66], ["grandmillennial", 82]],
     ],
   },
   scandi: {
@@ -1046,9 +1120,9 @@ export const BRANCHES = {
     rows: [
       [["arts_crafts", 20], ["international", 70]],
       [["brutalism", 70], ["suburban_traditional", 30]],
-      [["postmodern", 50], ["english_country", 15], ["cocaine_mod", 80]],
-      [["memphis", 25], ["maximalism", 60], ["mcmansion", 88]],
-      [["boho", 12], ["cottagecore", 30], ["dark_academia", 50], ["modern_farmhouse", 72], ["grandmillennial", 92]],
+      [["postmodern", 50], ["english_country", 15], ["hollywood_regency", 80]],
+      [["cocaine_mod", 80], ["memphis", 25], ["maximalism", 60], ["mcmansion", 88]],
+      [["boho", 10], ["cottagecore", 28], ["dark_academia", 46], ["modern_farmhouse", 64], ["modern_boho", 80], ["grandmillennial", 95]],
     ],
   },
   contemporary: {
