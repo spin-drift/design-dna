@@ -239,7 +239,6 @@ export const MOVEMENTS = {
     ],
     inherits: ["arts_crafts", "de_stijl", "vienna_secession"],
     rebels: ["Decorative excess", "art-craft separation"],
-    children: ["international", "scandi_mod"],
     children: ["international", "scandi_mod", "scandi_func"],
     seeIn: "Wassily Chair, Barcelona Chair, the Dessau school building",
     seeInAppendInteriors: false,
@@ -316,9 +315,7 @@ export const MOVEMENTS = {
     color: "modernist",
     images: [
       "https://en.wikipedia.org/wiki/Farnsworth_House",
-      "https://abeautifulmess.com/design-style-101-international-style",
-      "https://abeautifulmess.com/design-style-101-international-style",
-      "https://www.architecturaldigest.com/story/armando-aguirre-nicholas-potts-rockefeller-apartments"
+      "https://abeautifulmess.com/design-style-101-international-style"
     ],
     defining: "Glass curtain walls, steel frames, no ornament, volume over mass. The look of corporate modernism.",
     designers: [
@@ -347,7 +344,7 @@ export const MOVEMENTS = {
     color: "scandi",
     images: [
       "https://www.houseandgarden.co.uk/gallery/best-modernist-houses-sold-on-the-modern-house",
-      "https://www.moderndane.com/blogs/the-modern-dane-blog/what-is-modern-scandinavian-design"
+      "https://ordrupgaard.dk/en/udstillinger/finn-juhls-house"
     ],
     defining: "Warm functionalism. Teak and oak, organic curves, democratic design — beautiful things for everyone.",
     designers: [
@@ -431,7 +428,7 @@ export const MOVEMENTS = {
     images: [
       "https://www.atomic-ranch.com/architecture-design/a-1955-gem-california-modern",
       "https://www.midcenturyhome.com/a-frame-charles-dubois-palm-springs",
-      "https://www.stylemepretty.com/living/2021/01/10/mid-century-modern-meets-california-cool"
+      "https://abeautifulmess.com/design-style-101-international-style"
     ],
     defining: "MCM's vocabulary inside an indoor-outdoor architectural shell. Floor-to-ceiling glass that disappears into the landscape, exposed post-and-beam ceilings, the pool as a room. More saturated color than East Coast MCM, and Desert Modernism (Palm Springs) as its arid subset.",
     note: "In researching shots for this style, I found that California Modernism's imagery significantly shaped what we think of as Mid-Century Modern, such that you might have a hard time distinguishing the two.",
@@ -841,7 +838,7 @@ export const MOVEMENTS = {
     color: "scandi",
     images: [
       "https://www.heals.com/blog/meet-muuto-masters-scandinavian-design",
-      "https://www.moderndane.com/blogs/the-modern-dane-blog/scandinavian-interior-design-6-tips-to-bring-scandi-style-to-your-home"
+      "https://www.moderndane.com/blogs/the-modern-dane-blog/what-is-modern-scandinavian-design"
     ],
     defining: "Mass-market Scandinavian: light woods, white walls, hygge, functional restraint, accessible price points.",
     designers: [
@@ -895,8 +892,7 @@ export const MOVEMENTS = {
     color: "scandi",
     images: [
       "https://homiodecor.com/blogs/for-inspiration/2025-interior-trend-spotlight-organic-modern-sculptural-forms-earthy-textures",
-      "https://www.decorilla.com/online-decorating/organic-modern-style-home-before-after",
-      "https://www.livingetc.com/news/athena-calderone-four-things-perfect-rooms"
+      "https://homiodecor.com/blogs/for-inspiration/2025-interior-trend-spotlight-organic-modern-sculptural-forms-earthy-textures"
     ],
     defining: "Modernist bones, natural materials. Live-edge wood, boucle, plaster, plants, warm minimalism.",
     designers: [
@@ -922,7 +918,6 @@ export const MOVEMENTS = {
     region: "Global",
     color: "scandi",
     images: [
-      "https://www.homecrux.com/japandi-style-decorating-guide/169944/",
       "https://www.harpersbazaar.in/culture/story/a-style-guide-to-getting-japandi-interiors-right-564645-2022-10-31",
       "https://archive.is/MC5o6",
     ],
@@ -1155,9 +1150,8 @@ export const MOVEMENTS = {
     region: "US, Australia, global",
     color: "scandi",
     images: [
-      "https://www.mansionglobal.com/articles/a-modern-mediterranean-living-room-is-all-in-the-textures-9bffb343",
-      "https://archive.is/fAtwx",
-      "https://archive.is/fAtwx"
+      "https://eye-swoon.com/blogs/design/sarah-sherman-samuel-living-room",
+      "https://www.mansionglobal.com/articles/a-modern-mediterranean-living-room-is-all-in-the-textures-9bffb343"
     ],
     defining: "Plaster walls, arches, terracotta, warm whites, organic curves, woven materials. A Mediterranean update that absorbed Organic Modern's textural vocabulary.",
     designers: [
