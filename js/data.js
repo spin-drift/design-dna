@@ -240,6 +240,7 @@ export const MOVEMENTS = {
     inherits: ["arts_crafts", "de_stijl", "vienna_secession"],
     rebels: ["Decorative excess", "art-craft separation"],
     children: ["international", "scandi_mod"],
+    children: ["international", "scandi_mod", "scandi_func"],
     seeIn: "Wassily Chair, Barcelona Chair, the Dessau school building",
     seeInAppendInteriors: false,
     appendInteriorsToName: true,
@@ -264,7 +265,7 @@ export const MOVEMENTS = {
       { name: "Alvar Aalto", interiors: true },
       { name: "Bruno Mathsson", interiors: true },
     ],
-    inherits: ["arts_crafts"],
+    inherits: ["arts_crafts", "bauhaus"],
     rebels: ["Bauhaus austerity", "industrial coldness"],
     children: ["scandi_mod"],
     seeIn: "Aalto Stool 60, Paimio Chair, bent-plywood everything",
@@ -336,6 +337,7 @@ export const MOVEMENTS = {
       { term: "Farnsworth House Mies van der Rohe", note: "Glass-box minimalism" },
       { term: "Villa Savoye Le Corbusier", note: "Five points of architecture" },
       { term: "Glass House Philip Johnson", note: "The American glass pavilion" },
+      { term: "Villa Tugendhat Mies interior onyx wall", note: "The grammar in a lived-in house, not a pavilion" },
     ],
   },
   scandi_mod: {
@@ -531,7 +533,7 @@ export const MOVEMENTS = {
     images: [
       "https://www.worldofinteriors.com/story/geoffrey-bawa-number-11-colombo",
       "https://www.huntingforgeorge.com/blog/a-builders-own-modern-tropical-home-in-bali-let-us-in-house-tour",
-      "https://oriental-living.net/15-exquisite-living-room-interior-designs"
+      "https://orangemooninteriors.com/modern-tropical-interior-design"
     ],
     defining: "Indoor-outdoor pavilions, deep overhangs, courtyards and water, locally sourced stone and wood, restraint plus climate sense. The aesthetic of the contemporary luxury resort — plus increasingly residential.",
     designers: [
@@ -952,7 +954,7 @@ export const MOVEMENTS = {
     ],
     defining: "Exposed brick, blackened steel, Edison bulbs, concrete floors, ductwork, leather and reclaimed wood. Born when artists colonized SoHo cast-iron buildings in the 1970s; commodified as a residential style from the 1990s on.",
     designers: [
-      { name: "Roman Williams", interiors: true, note: "Stephen Alesch and Robin Standefer" },
+      { name: "Roman and Williams", interiors: true, note: "Stephen Alesch and Robin Standefer" },
       { name: "Restoration Hardware", interiors: true, note: "mass market" },
     ],
     inherits: ["brutalism", "international"],
@@ -982,7 +984,7 @@ export const MOVEMENTS = {
       "https://www.chairish.com/blog/luke-edward-hall-interview",
       "https://www.interiorology.com.au/blog/get-the-look-maximalism"
     ],
-    defining: "Pattern-on-pattern, saturated color, collected objects, deliberate excess. Reaction to a decade of grayscale minimalism.",
+    defining: "Less a look than a dial: the 'more is more' setting applied to whatever vocabulary you bring to it — pattern-on-pattern, saturated color, collected objects, deliberate density. As a named movement it's the 2015-onward reaction against a decade of grey minimalism, with practitioners (Wearstler, Hall, Heuman) running traditional references — often English Country — at an intensity restraint would never allow. What its descendants inherit is less a set of forms than the permission to be excessive.",
     designers: [
       { name: "Kelly Wearstler", interiors: true },
       { name: "Luke Edward Hall", interiors: true },
@@ -1044,7 +1046,7 @@ export const MOVEMENTS = {
     defining: "Saturated, layered, designer-coded boho. Deep terracottas and emerald greens, plants spilling everywhere, Moroccan rugs layered three deep, vintage objects from travel, intentional curated chaos. The Jungalow version — a direct descendant of 1970s hippie maximalism, brought back through Instagram.",
     designers: [
       { name: "Justina Blakeney", interiors: true, note: "Jungalow" },
-      { name: "Bohemian Society", interiors: true },
+      { name: "Dabito", interiors: true, note: "Old Brand New" },
     ],
     inherits: ["maximalism"],
     rebels: ["All-white minimalism", "Modern Farmhouse beige-fatigue"],
