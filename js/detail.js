@@ -168,6 +168,7 @@ export function renderDetail(container) {
     <div class="field">
       <div class="lbl">Defining</div>
       <div class="val">${escapeHtml(m.defining)}</div>
+      ${m.note && m.note.trim() ? `<p class="field-note"><em>${escapeHtml(m.note)}</em></p>` : ""}
     </div>
     <div class="field">
       <div class="lbl">Reacts to</div>

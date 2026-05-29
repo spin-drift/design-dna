@@ -300,6 +300,15 @@ a:hover { text-decoration-color: var(--ink); }
   fill: none;
   stroke: var(--rule-strong);
   stroke-width: 1;
+  transition: stroke 0.18s ease, stroke-width 0.18s ease;
+}
+/* Edges touching the currently-selected node. Darker ink and slightly
+   heavier stroke so the active movement's lineage stands out when
+   nodes overlap visually. The transition gives a soft fade as you
+   click between movements. */
+.edge--active {
+  stroke: var(--ink-soft);
+  stroke-width: 1.4;
 }
 .edge--secondary {
   stroke-dasharray: 3 4;
@@ -385,7 +394,10 @@ a:hover { text-decoration-color: var(--ink); }
 .node[data-id="industrial"] { width: 5rem; }
 .node[data-id="suburban_traditional"] { width: 5.5rem; }
 .node[data-id="hollywood_regency"] { width: 5.5rem; }
-
+.node[data-id="dopamine_decor"] { width: 5.5rem; }
+.node[data-id="modern_boho"] { width: 5rem; }
+.node[data-id="dark_academia"] { width: 5.5rem; }
+.node[data-id="modern_med"] { width: 7rem; }
 
 
 /* ---------- right column: detail panel ---------- */
@@ -449,6 +461,8 @@ a:hover { text-decoration-color: var(--ink); }
   width: 100%;
   height: auto;
   transition: opacity 0.15s;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 /* Single-image hover dim. Scoped with :not(.movement-image-carousel)
    so it doesn't fire when hovering the chevron zones of a multi-image
@@ -476,6 +490,7 @@ a:hover { text-decoration-color: var(--ink); }
 .movement-image-stack {
   display: grid;
   position: relative;
+  background-color: rgba(255,255,255,0.25) !important;
 }
 .movement-image-slide {
   grid-column: 1;
@@ -483,6 +498,8 @@ a:hover { text-decoration-color: var(--ink); }
   opacity: 0;
   transition: opacity 0.35s ease;
   pointer-events: none;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 .movement-image-slide.active {
   opacity: 1;
@@ -609,6 +626,15 @@ a:hover { text-decoration-color: var(--ink); }
 .field .val.empty {
   color: var(--ink-faint);
   font-style: italic;
+}
+/* Optional curator's note shown beneath the Defining text. Italic,
+   smaller, and a touch quieter so it reads as a footnote / sidebar
+   rather than competing with the main editorial copy. */
+.field-note {
+  margin: 0.7rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  line-height: 1.5;
 }
 
 /* Chips render as inline-flex runs so a 4-parent inherits row reads as

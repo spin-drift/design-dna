@@ -83,8 +83,14 @@ export function renderTree(container) {
   // letting the node backgrounds occlude the line where they overlap)
   // produces a much cleaner result than trying to anchor to the
   // bottom-edge and top-edge of nodes with varying heights.
+  //
+  // Edges touching the active node get an extra .edge--active class.
+  // CSS styles them with a darker ink and slightly heavier stroke so
+  // the selected movement's lineage stands out from the surrounding
+  // tree, even when nodes overlap visually.
   const seenEdges = new Set();
   const paths = [];
+  const activeId = state.node;
   function addEdge(parentId, childId) {
     if (!positions[parentId] || !positions[childId]) return;
     const key = `${parentId}->${childId}`;
@@ -100,9 +106,9 @@ export function renderTree(container) {
     const handle = Math.abs(dy) * 0.45;
     const path =
       `M${a.x} ${a.y} C ${a.x} ${a.y + handle}, ${b.x} ${b.y - handle}, ${b.x} ${b.y}`;
-    paths.push(
-      `<path d="${path}" fill="none" stroke="var(--rule-strong)" stroke-width="1" />`
-    );
+    const isActive = activeId && (parentId === activeId || childId === activeId);
+    const cls = isActive ? "edge edge--active" : "edge";
+    paths.push(`<path class="${cls}" d="${path}" fill="none" />`);
   }
   for (const [id, node] of Object.entries(positions)) {
     const m = MOVEMENTS[id];

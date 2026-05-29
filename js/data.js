@@ -1,6 +1,12 @@
 // Design movement data. Each movement has:
 //   name, years, region, color (palette key)
 //   defining: one-sentence elevator pitch
+//   note: optional caveat / footnote shown beneath `defining` as an
+//         italicized paragraph. Use for editorial qualifications about
+//         the movement OR the hero image we picked — e.g. "the
+//         saturated-walls reading isn't the whole story" or "the
+//         image shown is a contemporary execution, not a period room."
+//         Omit (or leave empty) and no note paragraph renders.
 //   designers: array of either strings OR {name, interiors: bool, note?}
 //             — when interiors is true, the image search appends "interiors"
 //   inherits: array of movement IDs this descends from
@@ -42,8 +48,9 @@ export const MOVEMENTS = {
     region: "Europe (esp. France, UK)",
     color: "neutral",
     images: [
+      "https://demaissa.wordpress.com/2015/03/11/beautiful-work-the-peacock-room",
       "https://www.christies.com/en/lot/lot-6356905",
-      "https://www.christies.com/en/lot/lot-6356905"
+      "https://www.pubhist.com/w21987"
     ],
     defining: "European absorption of Japanese aesthetics after Japan reopened — flat composition, asymmetry, restraint, natural motifs. A cross-cutting influence rather than a coherent movement.",
     designers: [
@@ -69,6 +76,11 @@ export const MOVEMENTS = {
     years: "1880s–1910s",
     region: "UK, then US",
     color: "neutral",
+    images: [
+      "https://artsandcraftshomes.com/interiors/a-guide-to-craftsman-style-furniture",
+      "https://www.architecturaldigest.com/story/why-william-morris-once-radical-designs-continue-to-intrigue",
+      "https://www.admiddleeast.com/story/this-beautifully-restored-home-shows-how-to-make-arts-and-crafts-style-look-modern"
+    ],
     defining: "Handcraft, honest materials, visible joinery, nature-inspired patterns, rejection of industrial ornament.",
     designers: [
       { name: "William Morris", interiors: true },
@@ -93,6 +105,11 @@ export const MOVEMENTS = {
     years: "1890–1910",
     region: "France, Belgium, Austria, Spain",
     color: "neutral",
+    images: [
+      "https://rundale.net/en/room-with-art-nouveau-art-objects",
+      "https://www.worldofinteriors.com/story/victor-horta-art-nouveau-brussels-home-studio",
+      "https://www.reddit.com/r/HomeDecorating/comments/x41gak/ideas_for_art_nouveau_decor_or_where_to_buy_pieces"
+    ],
     defining: "Whiplash curves, organic forms, ornament as structure. A sibling of Arts & Crafts that embraced new materials (iron, glass) but kept the handcraft ethos.",
     designers: [
       { name: "Hector Guimard", interiors: true },
@@ -118,6 +135,10 @@ export const MOVEMENTS = {
     years: "1897–1932",
     region: "Austria",
     color: "modernist",
+    images: [
+      "https://www.minniemuse.com/articles/musings/wiener-werkstaette",
+      "https://www.houseandgarden.co.uk/article/vienna-secession-movement"
+    ],
     defining: "The geometric, proto-modernist wing of Art Nouveau. Total works of art (Gesamtkunstwerk), grids softening curves, applied arts as fine arts. Bridges Art Nouveau directly to Bauhaus.",
     designers: [
       { name: "Josef Hoffmann", interiors: true },
@@ -144,6 +165,11 @@ export const MOVEMENTS = {
     years: "1920s–1930s",
     region: "France, US, global",
     color: "reaction",
+    images: [
+      "https://www.houseandgarden.co.uk/article/the-chrysler-building-is-for-sale",
+      "https://artiss.com.au/blogs/news/what-is-art-deco-interior-design",
+      "https://hommes.studio/journal/art-deco-apartment"
+    ],
     defining: "Glamorous machine-age modernism. Stepped silhouettes, sunburst motifs, exotic veneers, lacquer, chrome, mirrored surfaces, geometric repetition. The opulent twin of austere modernism — luxury Bauhaus.",
     designers: [
       { name: "Émile-Jacques Ruhlmann", interiors: true },
@@ -173,6 +199,10 @@ export const MOVEMENTS = {
     years: "1917–1931",
     region: "Netherlands",
     color: "modernist",
+    images: [
+      "https://ecampusontario.pressbooks.pub/artcultures/chapter/de-stijl-part-i-total-purity-smarthistory",
+      "https://www.home-designing.com/piet-mondrian-de-stijl-style-interior-design-tips-inspiration-pictures-home-accessories"
+    ],
     defining: "Pure geometry, primary colors plus black and white, asymmetric balance, total abstraction.",
     designers: [
       { name: "Piet Mondrian", interiors: false },
@@ -196,6 +226,11 @@ export const MOVEMENTS = {
     years: "1919–1933",
     region: "Germany",
     color: "modernist",
+    images: [
+      "https://www.thespruce.com/what-is-bauhaus-style-decor-5187143",
+      "https://www.livingetc.com/features/bauhaus-design",
+      "https://www.architecturaldigest.com/story/bauhaus-style-101"
+    ],
     defining: "Form follows function. Tubular steel, primary colors, mass-production thinking, unity of art and industry.",
     designers: [
       { name: "Walter Gropius", interiors: true },
@@ -220,6 +255,10 @@ export const MOVEMENTS = {
     years: "1930s",
     region: "Sweden, Denmark, Finland",
     color: "scandi",
+    images: [
+      "https://villamairea.fi/en",
+      "https://www.finnishdesignshop.com/en-us/product/aalto-armchair-41-paimio-black",
+    ],
     defining: "Functionalism softened by warmth. Light woods, natural light, hand-feel preserved alongside industrial methods.",
     designers: [
       { name: "Alvar Aalto", interiors: true },
@@ -245,6 +284,10 @@ export const MOVEMENTS = {
     years: "16th c. Japan; absorbed into Western design 1990s–",
     region: "Japan; global from the 1990s",
     color: "scandi",
+    images: [
+      "https://www.architecturaldigest.com/story/axel-vervoordt-crafts-a-poetic-home-in-the-belgian-countryside-for-his-family",
+      "https://www.schlage.com/en/blog/design-and-trends/what-is-wabi-sabi-and-how-do-you-create-the-look-at-home.html"
+    ],
     defining: "Beauty in imperfection, impermanence, and incompleteness. A Japanese aesthetic philosophy, not a movement — but adopted as a design vocabulary in the West and now a direct input to Japandi.",
     designers: [
       { name: "Axel Vervoordt", interiors: true, note: "Western adopter" },
@@ -270,6 +313,12 @@ export const MOVEMENTS = {
     years: "1932–1960s",
     region: "Global, US-centered",
     color: "modernist",
+    images: [
+      "https://en.wikipedia.org/wiki/Farnsworth_House",
+      "https://abeautifulmess.com/design-style-101-international-style",
+      "https://abeautifulmess.com/design-style-101-international-style",
+      "https://www.architecturaldigest.com/story/armando-aguirre-nicholas-potts-rockefeller-apartments"
+    ],
     defining: "Glass curtain walls, steel frames, no ornament, volume over mass. The look of corporate modernism.",
     designers: [
       { name: "Mies van der Rohe", interiors: true },
@@ -294,6 +343,10 @@ export const MOVEMENTS = {
     years: "1940s–1960s",
     region: "Denmark, Sweden, Finland",
     color: "scandi",
+    images: [
+      "https://www.houseandgarden.co.uk/gallery/best-modernist-houses-sold-on-the-modern-house",
+      "https://www.moderndane.com/blogs/the-modern-dane-blog/what-is-modern-scandinavian-design"
+    ],
     defining: "Warm functionalism. Teak and oak, organic curves, democratic design — beautiful things for everyone.",
     designers: [
       { name: "Hans Wegner", interiors: true },
@@ -303,7 +356,7 @@ export const MOVEMENTS = {
     inherits: ["scandi_func", "bauhaus"],
     rebels: ["Cold steel-and-glass modernism"],
     children: ["danish_mod", "mid_century", "contemp_scandi"],
-    seeIn: "Wishbone Chair, Egg Chair, Series 7",
+    seeIn: "Wishbone Chair, Egg Chair, Series 7 Chair",
     seeInAppendInteriors: false,
     appendInteriorsToName: true,
     examples: [
@@ -318,7 +371,11 @@ export const MOVEMENTS = {
     years: "1945–1969",
     region: "US, especially California",
     color: "modernist",
+    images: [
+      "https://discover.hubpages.com/living/A-Pocket-Guide-to-Mid-Century-Modern-Style",
+    ],
     defining: "Postwar optimism plus émigré Bauhaus ideas plus new materials. Molded plywood, fiberglass shells, atomic motifs, indoor-outdoor living.",
+    note: "In researching shots for this style, I realized that what most of us THINK of as authentic MCM is actually Midcentury Revival, and the real MCM is comparatively understated.",
     designers: [
       { name: "Charles & Ray Eames", interiors: true },
       { name: "Eero Saarinen", interiors: true },
@@ -343,6 +400,9 @@ export const MOVEMENTS = {
     years: "1950s–1960s",
     region: "US import of Danish design",
     color: "scandi",
+    images: [
+      "https://stackedhomes.com/a-warm-danish-japanese-influenced-house-with-vintage-furniture-pieces"
+    ],
     defining: "Same DNA as Scandinavian Modern but specifically what was marketed and sold in postwar America.",
     designers: [
       { name: "Hans Wegner", interiors: true },
@@ -364,13 +424,20 @@ export const MOVEMENTS = {
   california_mod: {
     name: "California Modernism",
     years: "1945–1970s",
-    region: "Los Angeles, Palm Springs",
+    region: "Los Angeles, Palm Springs, Bay Area",
     color: "modernist",
-    defining: "Glass walls, flat roofs, post-and-beam, swimming pools, climate-driven openness. Includes Desert Modernism (Palm Springs).",
+    images: [
+      "https://www.atomic-ranch.com/architecture-design/a-1955-gem-california-modern",
+      "https://www.midcenturyhome.com/a-frame-charles-dubois-palm-springs",
+      "https://www.stylemepretty.com/living/2021/01/10/mid-century-modern-meets-california-cool"
+    ],
+    defining: "MCM's vocabulary inside an indoor-outdoor architectural shell. Floor-to-ceiling glass that disappears into the landscape, exposed post-and-beam ceilings, the pool as a room. More saturated color than East Coast MCM, and Desert Modernism (Palm Springs) as its arid subset.",
+    note: "In researching shots for this style, I found that California Modernism's imagery significantly shaped what we think of as Mid-Century Modern, such that you might have a hard time distinguishing the two.",
     designers: [
       { name: "Richard Neutra", interiors: true },
       { name: "Rudolph Schindler", interiors: true },
       { name: "Albert Frey", interiors: true },
+      { name: "Joseph Eichler", interiors: true, note: "developer; tract homes" },
     ],
     inherits: ["international", "mid_century"],
     rebels: ["Closed-off traditional homes"],
@@ -396,7 +463,13 @@ export const MOVEMENTS = {
     years: "1940s–present",
     region: "Mexico",
     color: "reaction",
+    images: [
+      "https://viraje.es/en/visiting-mexico-the-three-houses-that-inspired-us-the-most",
+      "https://angiemcmonigal.com/2023/04/27/casa-gilardi-luis-barragan",
+      "https://www.elledecoration.co.uk/decorating/a61837709/how-to-mexican-colour-maye"
+    ],
     defining: "Modernist forms grounded in Mexican vernacular and color. Saturated planes of pink, ochre, and indigo against rough plaster; water features; volcanic stone; massive doors. Modernism with the sun left on.",
+    note: "I was largely unable to find pictures that translate the incredible vibrancy and taste of this movement's masterworks into residential interiors. Assume that most of what you see labeled as 'Mexican Design' is caucastic pastiche. The contemporary Mexican Modernism is probably happening right in Mexico from designers like Maye Ruiz.",
     designers: [
       { name: "Luis Barragán", interiors: true },
       { name: "Ricardo Legorreta", interiors: true },
@@ -422,7 +495,13 @@ export const MOVEMENTS = {
     years: "1940s–1970s, revival now",
     region: "Brazil (São Paulo, Rio)",
     color: "modernist",
+    images: [
+      "https://www.housebeautiful.com/design-inspiration/a35999148/brazilian-modernism",
+      "https://marnois.com/marnois-mag/brazilian-modernism-timeless-interiors",
+      "https://www.instagram.com/p/DXR7bYEjE9H",
+    ],
     defining: "Curves where European modernism kept straight lines, tropical hardwoods (jacarandá, ipê), generous indoor-outdoor flow, sculptural concrete. Sensual and structural at once — modernism that could be relaxed in.",
+    note: "Many of the available interior shots for this style are actually contemporary interpretations. The original masterworks didn't need to rely as much on jungle motifs when the actual jungle was right outside.",
     designers: [
       { name: "Oscar Niemeyer", interiors: true },
       { name: "Lina Bo Bardi", interiors: true },
@@ -449,6 +528,11 @@ export const MOVEMENTS = {
     years: "1960s–present",
     region: "Sri Lanka, Southeast Asia, then global luxury hospitality",
     color: "scandi",
+    images: [
+      "https://www.worldofinteriors.com/story/geoffrey-bawa-number-11-colombo",
+      "https://www.huntingforgeorge.com/blog/a-builders-own-modern-tropical-home-in-bali-let-us-in-house-tour",
+      "https://oriental-living.net/15-exquisite-living-room-interior-designs"
+    ],
     defining: "Indoor-outdoor pavilions, deep overhangs, courtyards and water, locally sourced stone and wood, restraint plus climate sense. The aesthetic of the contemporary luxury resort — plus increasingly residential.",
     designers: [
       { name: "Geoffrey Bawa", interiors: true },
@@ -478,6 +562,12 @@ export const MOVEMENTS = {
     years: "1930s–1960s, revival 2000s–2010s",
     region: "Los Angeles and New York",
     color: "reaction",
+    images: [
+      "https://greenbrierwv.com/editorials/dorothy-draper-the-greenbrier-decorator",
+      "https://graciestudio.com/article/how-chinoiserie-influenced-hollywood-regency",
+      "https://jonathanadler.com/products/topanga-four-seater-sofa-1?fabric=Abstract+Natural&base=Metal+Base&variant_id=31500824641570",
+      "https://www.thespruce.com/what-is-hollywood-regency-style-5186853"
+    ],
     defining: "Mid-century glamour. Dorothy Draper's outsized neoclassical references, William Haines's polished Hollywood-actor commissions, chinoiserie, oversized scale, lacquered finishes, high-contrast pattern (especially black-and-white), brass and mirrors. The residential expression of Art Deco's glamour after Art Deco itself went out of fashion — kept alive in Beverly Hills until the 2000s, when Jonathan Adler made it accessible again.",
     designers: [
       { name: "Dorothy Draper", interiors: true },
@@ -508,6 +598,11 @@ export const MOVEMENTS = {
     years: "mid-1960s–early 1970s",
     region: "Europe and US",
     color: "reaction",
+    images: [
+      "https://www.apartmenttherapy.com/designer-verner-pantons-private-home-is-every-bit-as-wild-as-youd-expect-241227",
+      "https://emfurn.com/blogs/elite-modern-furniture-blog/add-a-little-pop-art-to-your-home-decor",
+      "https://www.pantonworld.com/furniture-2/1968-living-tower-01",
+    ],
     defining: "Plastic-fantastic optimism. Molded plastics in candy colors, modular foam seating, geometric pop motifs, futurism without dystopia. Mid-century modernism's late, weird, joyful phase — and the direct ancestor of Memphis.",
     designers: [
       { name: "Verner Panton", interiors: true },
@@ -536,7 +631,13 @@ export const MOVEMENTS = {
     years: "late 1970s–mid 1980s",
     region: "NYC, LA, Miami",
     color: "reaction",
+    images: [
+      "https://www.instagram.com/p/DCdVJwZtr_j",
+      "https://www.pinterest.com/quadrumvirate/coke-dens",
+      "https://archive.is/KDeJg"
+    ],
     defining: "The commercial-residential luxe of the disco era. Mirrored walls, smoked glass, chrome, brass, lacquered black, cream shag, oversized leather sectionals, glass block, palm motifs. A retroactive name for a real moment — not in the textbooks but unmistakable when you see it. The Tony Montana mansion is the joke version; John Saladino's actual interiors are the serious one.",
+    note: "This style tends to come in 'villain's lair' and 'Miami Vice' variants. Unfortunately, the main sources for its look are a single paywalled GQ article, the defunct IG account @realcocainedecor, and a ton of AI-generated inspo.",
     designers: [
       { name: "John Saladino", interiors: true },
       { name: "Angelo Donghia", interiors: true },
@@ -565,6 +666,10 @@ export const MOVEMENTS = {
     years: "1950s–1970s",
     region: "UK, then global",
     color: "modernist",
+    images: [
+      "https://www.decorilla.com/online-decorating/brutalist-interior-design",
+      "https://www.thestylesaloniste.com/brutalist-interior-design",
+    ],
     defining: "Raw concrete (béton brut), monumental mass, expressed structure, civic ambition. Honesty taken to extremes.",
     designers: [
       { name: "Le Corbusier", interiors: true, note: "late" },
@@ -591,7 +696,13 @@ export const MOVEMENTS = {
     years: "1972–1990s",
     region: "US, Italy",
     color: "reaction",
-    defining: "Ornament returns. Historical quotation, irony, color, references — explicit rejection of modernist purity.",
+    images: [
+      "https://www.architecturalrecord.com/articles/13226-op-ed-johnsons-at-and-t-building-is-influential-but-is-it-good",
+      "https://www.archdaily.com/62743/ad-classics-vanna-venturi-house-robert-venturi",
+      "https://ddvm.org/2020/12/09/stair-at-mothers-houserobert-venturi1964",
+      "https://savingplaces.org/stories/the-many-sides-of-michael-graves",
+    ],
+    defining: "The intellectual position that you can quote freely from history because modernism has been exposed as just another style. Ornament returns; historical quotation, irony, and color all become available again — explicit rejection of modernist purity.",
     designers: [
       { name: "Robert Venturi", interiors: true },
       { name: "Michael Graves", interiors: true },
@@ -614,6 +725,11 @@ export const MOVEMENTS = {
     years: "1981–1987",
     region: "Milan",
     color: "reaction",
+    images: [
+      "https://hommes.studio/journal/what-is-memphis-design-style",
+      "https://hommes.studio/journal/what-is-memphis-design-style",
+      "https://hommes.studio/journal/what-is-memphis-design-style"
+    ],
     defining: "Loud patterns, plastic laminates, geometric shapes, jarring color. Postmodernism turned up to eleven, briefly.",
     designers: [
       { name: "Ettore Sottsass", interiors: true },
@@ -638,6 +754,12 @@ export const MOVEMENTS = {
     years: "1950s–present (peak 1980s–2000s)",
     region: "US, then global suburbs",
     color: "neutral",
+    images: [
+      "https://www.bhg.com/decorating/lessons/basics/90s-decor",
+      "https://nj1015.com/ixp/942/p/tuscan-kitchen-nj",
+      "https://www.pinterest.com/pin/8162843069831530",
+      "https://www.buzzfeed.com/mollycapobianco/y2k-design-trends"
+    ],
     defining: "The unmarked steady-state of late-20th-century American suburban interiors. Heavy oak or cherry furniture, Tuscan or French-country kitchens, formal living rooms, floral upholstery, wall-to-wall carpet, saturated paint colors. The aesthetic almost nobody chooses on purpose but everybody recognizes — and the thing that most contemporary lifestyle styles are reacting to.",
     designers: [],
     inherits: [],
@@ -659,6 +781,10 @@ export const MOVEMENTS = {
     years: "1985–present",
     region: "US suburban spec building",
     color: "reaction",
+    images: [
+      "https://www.reddit.com/r/McMansionHell/comments/12i9ud8/why_does_almost_every_mcmansion_have_a_large",
+      "https://www.wosu.org/news/2017-10-18/mcmansion-hell-offers-biting-take-on-massive-mismatched-homes"
+    ],
     defining: "Postmodern eclecticism applied to spec building, at scale. Two-story foyers, soaring great-room ceilings, palladian windows, mismatched roof gables, a Tuscan column or two glued onto a Colonial body. Not so much a style as a syndrome — but absolutely a recognizable aesthetic.",
     designers: [
       { name: "Toll Brothers", interiors: true, note: "as a developer aesthetic" },
@@ -684,6 +810,10 @@ export const MOVEMENTS = {
     years: "1960s–present",
     region: "Global",
     color: "modernist",
+    images: [
+      "https://www.worldofinteriors.com/story/john-pawson-life-house",
+      "https://www.admiddleeast.com/story/21-organic-minimalism-home-decor-ideas-to-bring-natural-warmth-into-minimalist-interiors"
+    ],
     defining: "Reduction to essentials. Monochrome palettes, hidden storage, negative space as design element.",
     designers: [
       { name: "John Pawson", interiors: true },
@@ -707,6 +837,10 @@ export const MOVEMENTS = {
     years: "1990s–present",
     region: "Nordic, global IKEA effect",
     color: "scandi",
+    images: [
+      "https://www.heals.com/blog/meet-muuto-masters-scandinavian-design",
+      "https://www.moderndane.com/blogs/the-modern-dane-blog/scandinavian-interior-design-6-tips-to-bring-scandi-style-to-your-home"
+    ],
     defining: "Mass-market Scandinavian: light woods, white walls, hygge, functional restraint, accessible price points.",
     designers: [
       { name: "Cecilie Manz", interiors: true },
@@ -730,6 +864,9 @@ export const MOVEMENTS = {
     years: "2000s–present",
     region: "US, global",
     color: "modernist",
+    images: [
+      "https://www.livingetc.com/features/mid-century-modern-homes-explainer",
+    ],
     defining: "The conscious reissuing of MCM as a 21st-century style — original designs back in production, plus mass-market interpretations. Bridges MCM into the contemporary scene and feeds directly into Organic Modern.",
     designers: [
       { name: "Herman Miller", interiors: true, note: "reissues" },
@@ -754,6 +891,11 @@ export const MOVEMENTS = {
     years: "2015–present",
     region: "US, then global",
     color: "scandi",
+    images: [
+      "https://homiodecor.com/blogs/for-inspiration/2025-interior-trend-spotlight-organic-modern-sculptural-forms-earthy-textures",
+      "https://www.decorilla.com/online-decorating/organic-modern-style-home-before-after",
+      "https://www.livingetc.com/news/athena-calderone-four-things-perfect-rooms"
+    ],
     defining: "Modernist bones, natural materials. Live-edge wood, boucle, plaster, plants, warm minimalism.",
     designers: [
       { name: "Kelly Wearstler", interiors: true, note: "some work" },
@@ -777,6 +919,11 @@ export const MOVEMENTS = {
     years: "2016–present",
     region: "Global",
     color: "scandi",
+    images: [
+      "https://www.homecrux.com/japandi-style-decorating-guide/169944/",
+      "https://www.harpersbazaar.in/culture/story/a-style-guide-to-getting-japandi-interiors-right-564645-2022-10-31",
+      "https://archive.is/MC5o6",
+    ],
     defining: "Scandinavian minimalism meets Japanese wabi-sabi. Even more restrained than Scandi, more textural than minimalism.",
     designers: [
       { name: "Norm Architects", interiors: true },
@@ -800,6 +947,9 @@ export const MOVEMENTS = {
     years: "1970s–present",
     region: "NYC SoHo origins, then global",
     color: "modernist",
+    images: [
+      "https://www.decoist.com/industrial-living-room-inspiration",
+    ],
     defining: "Exposed brick, blackened steel, Edison bulbs, concrete floors, ductwork, leather and reclaimed wood. Born when artists colonized SoHo cast-iron buildings in the 1970s; commodified as a residential style from the 1990s on.",
     designers: [
       { name: "Roman Williams", interiors: true, note: "Stephen Alesch and Robin Standefer" },
@@ -827,13 +977,18 @@ export const MOVEMENTS = {
     years: "2015–present",
     region: "Global",
     color: "reaction",
+    images: [
+      "https://www.livingetc.com/advice/what-is-tidy-maximalism",
+      "https://www.chairish.com/blog/luke-edward-hall-interview",
+      "https://www.interiorology.com.au/blog/get-the-look-maximalism"
+    ],
     defining: "Pattern-on-pattern, saturated color, collected objects, deliberate excess. Reaction to a decade of grayscale minimalism.",
     designers: [
       { name: "Kelly Wearstler", interiors: true },
       { name: "Luke Edward Hall", interiors: true },
       { name: "Beata Heuman", interiors: true },
     ],
-    inherits: ["postmodern", "memphis"],
+    inherits: ["postmodern", "memphis", "english_country"],
     rebels: ["Minimalism", "Japandi restraint"],
     children: ["cottagecore", "dark_academia", "boho"],
     seeIn: "Pattern-clashing rooms on Instagram, Wearstler hotel interiors",
@@ -850,6 +1005,11 @@ export const MOVEMENTS = {
     years: "1960s–present (rooted in 19th c.)",
     region: "UK, then global anglophile",
     color: "reaction",
+    images: [
+      "https://www.architecturaldigest.com/gallery/classic-decor-elements-every-english-country-home-should-have",
+      "https://www.homesandgardens.com/interior-design/what-is-english-country-decor",
+      "https://www.theenglishhome.co.uk/interiors/room-inspiration/living-room-ideas"
+    ],
     defining: "Chintz, layered patterns, faded reds and blues, antique rugs over rugs, dogs on sofas, books on every surface. The aspirational English country house aesthetic codified by Colefax & Fowler and exported worldwide.",
     designers: [
       { name: "Nancy Lancaster", interiors: true },
@@ -860,7 +1020,7 @@ export const MOVEMENTS = {
     ],
     inherits: ["arts_crafts"],
     rebels: ["Modernist austerity", "Bauhaus rejection of ornament"],
-    children: ["grandmillennial"],
+    children: ["grandmillennial", "maximalism"],
     seeIn: "Country Life magazine spreads, National Trust houses, Colefax & Fowler showrooms, every Mitford-novel adaptation",
     seeInAppendInteriors: true,
     appendInteriorsToName: true,
@@ -878,6 +1038,9 @@ export const MOVEMENTS = {
     years: "1960s–present (peak 2014–present as named style)",
     region: "Global",
     color: "reaction",
+    images: [
+      "https://artfulliving.com/justina-blakeney-decorate-wild-interview",
+    ],
     defining: "Saturated, layered, designer-coded boho. Deep terracottas and emerald greens, plants spilling everywhere, Moroccan rugs layered three deep, vintage objects from travel, intentional curated chaos. The Jungalow version — a direct descendant of 1970s hippie maximalism, brought back through Instagram.",
     designers: [
       { name: "Justina Blakeney", interiors: true, note: "Jungalow" },
@@ -901,6 +1064,10 @@ export const MOVEMENTS = {
     years: "2017–present",
     region: "US, then global mass market",
     color: "reaction",
+    images: [
+      "https://smart-space-deco.com/modern-bohemian-decor-more-chic-and-uncluttered-than-ever",
+      "https://www.elledecor.com/design-decorate/room-ideas/g63576255/boho-living-room-ideas"
+    ],
     defining: "Boho's vocabulary executed in Modern Farmhouse's palette. Single macramé on a dowel above the bed, rattan pendant, woven baskets, faux-fur throw, one fiddle-leaf fig, all in cream and beige. What happened when Modern Farmhouse wanted texture without committing to color, and Boho went to Target.",
     designers: [
       { name: "Target", interiors: true, note: "Project 62, Opalhouse" },
@@ -928,6 +1095,9 @@ export const MOVEMENTS = {
     years: "2018–present",
     region: "US, internet-native, global",
     color: "reaction",
+    images: [
+      "https://aesthetics.fandom.com/wiki/Grandmillennial",
+    ],
     defining: "Millennial-aged 'granny chic' — chinoiserie, ruffled lampshades, dust ruffles, blue-and-white porcelain, skirted tables, pleated lampshades, deliberately fussy details. The next generation falling in love with their grandmother's aesthetic.",
     designers: [
       { name: "Caitlin Wilson", interiors: true },
@@ -955,6 +1125,11 @@ export const MOVEMENTS = {
     years: "2010s–present",
     region: "US (then global)",
     color: "reaction",
+    images: [
+      "https://www.decorilla.com/online-decorating/modern-farmhouse-decor-ideas",
+      "https://www.decorilla.com/online-decorating/modern-farmhouse-decor-ideas"
+
+    ],
     defining: "Shiplap, black metal, barn doors, white walls, reclaimed wood. Joanna Gaines and HGTV exported it everywhere. A reaction to McMansion excess that became its own cliché.",
     designers: [
       { name: "Joanna Gaines", interiors: true },
@@ -977,6 +1152,11 @@ export const MOVEMENTS = {
     years: "2015–present",
     region: "US, Australia, global",
     color: "scandi",
+    images: [
+      "https://www.mansionglobal.com/articles/a-modern-mediterranean-living-room-is-all-in-the-textures-9bffb343",
+      "https://archive.is/fAtwx",
+      "https://archive.is/fAtwx"
+    ],
     defining: "Plaster walls, arches, terracotta, warm whites, organic curves, woven materials. A Mediterranean update that absorbed Organic Modern's textural vocabulary.",
     designers: [
       { name: "Amber Lewis", interiors: true },
@@ -1001,6 +1181,10 @@ export const MOVEMENTS = {
     years: "1990s–present (rooted in 1880s Shingle Style)",
     region: "US East Coast, then global",
     color: "scandi",
+    images: [
+      "https://hommes.studio/journal/coastal-hamptons-the-iconic-us-beachside-interior-design-style",
+      "https://www.thisoldhouse.com/living-rooms/coastal-grandmother-aesthetic"
+    ],
     defining: "Coastal New England via Long Island money. White slipcovers, sisal rugs, weathered teak, board-and-batten walls, navy and white stripes, hydrangeas. A lighter, breezier descendant of the Shingle Style cottage tradition that became its own aspirational lifestyle aesthetic.",
     designers: [
       { name: "Aerin Lauder", interiors: true },
@@ -1029,6 +1213,10 @@ export const MOVEMENTS = {
     years: "2018–present",
     region: "Internet-native, global",
     color: "reaction",
+    images: [
+      "https://www.spiffyspools.com/spiffy-speak/cottagecore-decor-aesthetic-house",
+      "https://www.lorddecor.com/blog/cottagecore-room"
+    ],
     defining: "Pastoral romanticism, vintage florals, layered textiles, gathered flowers, a return to slow domesticity. An internet aesthetic that became a real interior style.",
     designers: [
       { name: "Beata Heuman", interiors: true, note: "high end" },
@@ -1045,11 +1233,51 @@ export const MOVEMENTS = {
       { term: "Laura Ashley vintage floral interior", note: "The 80s precursor being mined" },
     ],
   },
+  dopamine_decor: {
+    name: "Dopamine Decor",
+    years: "2022–present",
+    region: "US/UK internet, then global",
+    color: "reaction",
+    images: [
+      "https://aestheticsofjoy.com/dopamine-decor",
+      "https://thursd.com/articles/postmodern-interior-houseplants",
+      "https://www.decorilla.com/online-decorating/dopamine-decorating-before-after",
+      "https://poshpennies.com/how-to-decorate-postmodern"
+    ],
+    defining: "Memphis-era visual vocabulary executed through Maximalism's permission structure. Squiggle and biomorphic motifs, saturated primary and secondary colors used as solid blocks, plants tucked everywhere, color-sorted bookshelves, plastic crates as decor. Internet-native, renter-friendly, deliberately joyful as a posture against beige-on-beige minimalism.",
+    note: "Sometimes also called 'Memphis Revival' or even 'Postmodern' online, though you could argue neither are precisely right.",
+    designers: [
+      { name: "Dabito", interiors: true, note: "Old Brand New" },
+      { name: "Hay", interiors: true, note: "Danish brand" },
+      { name: "Aykasa", interiors: true, note: "the crates" },
+      { name: "MoMA Design Store", interiors: true },
+    ],
+    inherits: ["memphis", "maximalism"],
+    rebels: ["Beige-on-beige minimalism", "taste as restraint", "Modern Farmhouse"],
+    children: [],
+    seeIn: "TikTok dopamine decor tags, Dabito's Old Brand New blog, Hay catalogs, color-sorted bookshelves on Instagram, Urban Outfitters Home",
+    seeInAppendInteriors: true,
+    appendInteriorsToName: true,
+    examples: [
+      { term: "dopamine decor apartment interior", note: "The reference look" },
+      { term: "Dabito Old Brand New interior", note: "The blog that codified it" },
+      { term: "Memphis revival apartment interior", note: "The other name people use" },
+      { term: "color sorted bookshelf interior", note: "The signature styling move" },
+      { term: "Hay furniture interior styled", note: "The brand that supplies the vocabulary" },
+      { term: "squiggle shelf interior maximalist", note: "The signature shape" },
+      { term: "Aykasa crate storage interior colorful", note: "The crates as styling object" },
+    ],
+  },
   dark_academia: {
     name: "Dark Academia",
     years: "2019–present",
     region: "Internet-native, global",
     color: "reaction",
+    images: [
+      "https://www.hgtv.com/decorating/design-ideas/decorate-with-dark-academia-in-your-home-pictures",
+      "https://www.hgtv.com/decorating/design-ideas/how-to-achieve-the-dark-academia-look-in-your-home-pictures",
+      "https://www.decorilla.com/online-decorating/dark-academia-aesthetic-style"
+    ],
     defining: "Wood paneling, leather, brass, library lamps, oxblood and forest green. The interior wing of a literary internet aesthetic — Oxford college rooms by way of TikTok.",
     designers: [],
     inherits: ["maximalism"],
@@ -1092,7 +1320,7 @@ export const BRANCHES = {
       // lineage depth, later chronology, distinct visual band.
       [["industrial", 8], ["postmodern", 22], ["cocaine_mod", 42], ["mcm_revival", 60], ["contemp_scandi", 85]],
       [["memphis", 6], ["maximalism", 20], ["organic_mod", 38], ["japandi", 54], ["modern_farmhouse", 70], ["mcmansion", 84], ["hamptons", 96]],
-      [["boho", 6], ["cottagecore", 22], ["dark_academia", 38], ["modern_med", 52], ["modern_boho", 66], ["grandmillennial", 82]],
+      [["boho", 5], ["cottagecore", 20], ["dark_academia", 35], ["dopamine_decor", 50], ["modern_med", 65], ["modern_boho", 80], ["grandmillennial", 95]],
     ],
   },
   scandi: {
@@ -1122,7 +1350,7 @@ export const BRANCHES = {
       [["brutalism", 70], ["suburban_traditional", 30]],
       [["postmodern", 50], ["english_country", 15], ["hollywood_regency", 80]],
       [["cocaine_mod", 80], ["memphis", 25], ["maximalism", 60], ["mcmansion", 88]],
-      [["boho", 10], ["cottagecore", 28], ["dark_academia", 46], ["modern_farmhouse", 64], ["modern_boho", 80], ["grandmillennial", 95]],
+      [["boho", 8], ["cottagecore", 23], ["dark_academia", 38], ["modern_farmhouse", 53], ["modern_boho", 68], ["dopamine_decor", 82], ["grandmillennial", 95]],
     ],
   },
   contemporary: {
@@ -1130,7 +1358,7 @@ export const BRANCHES = {
     rows: [
       [["scandi_mod", 10], ["mid_century", 28], ["minimalism", 45], ["wabi_sabi", 65], ["english_country", 88]],
       [["contemp_scandi", 10], ["mcm_revival", 28], ["tropical_mod", 48], ["maximalism", 68], ["suburban_traditional", 88]],
-      [["organic_mod", 6], ["modern_med", 19], ["hamptons", 32], ["modern_farmhouse", 47], ["industrial", 60], ["boho", 73], ["cottagecore", 85], ["dark_academia", 96]],
+      [["organic_mod", 6], ["modern_med", 18], ["hamptons", 30], ["modern_farmhouse", 42], ["industrial", 54], ["boho", 66], ["dopamine_decor", 78], ["cottagecore", 88], ["dark_academia", 96]],
       [["japandi", 20], ["grandmillennial", 60]],
     ],
   },
