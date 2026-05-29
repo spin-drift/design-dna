@@ -468,7 +468,7 @@ export const MOVEMENTS = {
       "https://www.elledecoration.co.uk/decorating/a61837709/how-to-mexican-colour-maye"
     ],
     defining: "Modernist forms grounded in Mexican vernacular and color. Saturated planes of pink, ochre, and indigo against rough plaster; water features; volcanic stone; massive doors. Modernism with the sun left on.",
-    note: "I was largely unable to find pictures that translate the incredible vibrancy and taste of this movement's masterworks into residential interiors. Assume that most of what you see labeled as 'Mexican Design' is caucastic pastiche. The contemporary Mexican Modernism is probably happening right in Mexico from designers like Maye Ruiz.",
+    note: "I was largely unable to find pictures that translate the incredible vibrancy and taste of this movement's masterworks into residential interiors. Assume that most of what you see labeled as 'Mexican Design' is caucastic pastiche. The contemporary Mexican Modernism is probably happening right in Mexico from designers like Maye Ruiz (third image).",
     designers: [
       { name: "Luis Barragán", interiors: true },
       { name: "Ricardo Legorreta", interiors: true },
